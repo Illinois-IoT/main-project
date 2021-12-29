@@ -5,23 +5,26 @@ import time
 
 from skimage.metrics import structural_similarity
 
-def capture_images(number = 10, prefix = "pic", model = "haarcascade_frontalface_default.xml"):
+def capture_images(number = 10, prefix = "pic"):
 
     name = prefix
 
-    cascPath = "haarcascade_frontalface_default.xml"
-
-    faceCascade = cv2.CascadeClassifier(cascPath)
-
     for i in range(number):
-        os.system("./capture.sh " + name + str(i))
+        os.environ["COUNTER"] = str(int(os.environ["COUNTER"]) + 1)
+        os.system("./capture.sh " + name + str(int(os.environ.get("COUNTER")) + i))
         time.sleep(0.5)
 
     images = [cv2.imread(file) for file in glob.glob('../images/*.jpg')]
 
     file_names = [str(file.split("/images/")[1]) for file in glob.glob('../images/*.jpg')]
 
-def identifyMovementStructural(image1, image2, output_file_name_diff, display = False):
+def clear_images():
+    filepath = "../images"
+    for file in os.scandir(filepath):
+        os.remove(file.path)
+    os.environ["COUNTER"] = "0"
+
+def identifyMovement_ssim(image1, image2, output_file_name_diff, display = False):
     #use structural similarity rather than direct pixel matching
     difference = cv2.subtract(image1, image2)
     gray_diff = cv2.cvtColor(difference, cv2.COLOR_BGR2GRAY)
@@ -50,7 +53,16 @@ def identifyMovementStructural(image1, image2, output_file_name_diff, display = 
         cv2.waitKey()
         cv2.destroyAllWindows()
 
-def identifyFaces(img, name):
+def IdentifyMovement(img1, img2):
+    pass
+
+
+def identifyFaces(img, name, model = "haarcascade_frontalface_default.xml"):
+    
+    cascPath = model
+
+    faceCascade = cv2.CascadeClassifier(cascPath)
+    
     found = False
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = faceCascade.detectMultiScale(
@@ -75,5 +87,3 @@ def identifyFaces(img, name):
     cv2.imwrite(new_name, img)
     
     return found
-    
-
