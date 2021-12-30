@@ -2,27 +2,45 @@ import os
 import cv2
 import glob
 import time
+import csv
 
 from skimage.metrics import structural_similarity
 
-def capture_images(number = 10, prefix = "pic"):
+def get_counter():
+    f = open('counter.csv', 'r')
+    counter = f.readlines()[0]
+    return(int(counter))
+def increment_counter():
+    x = get_counter() + 1
+    with open ('counter.csv','w') as f:
+        write = csv.writer(f)
+        write.writerow([str(x)])
+
+def capture_images(number = 10, prefix = "pic", delay = 0.5, forever = False):
 
     name = prefix
+    if(forever):
+        while(True):
+            increment_counter()
+            os.system("./capture.sh " + name + str(get_counter()))
+            time.sleep(delay)
+    else:
+        for i in range(number):
+            increment_counter()
+            os.system("./capture.sh " + name + str(get_counter()))
+            time.sleep(delay)
 
-    for i in range(number):
-        os.environ["COUNTER"] = str(int(os.environ["COUNTER"]) + 1)
-        os.system("./capture.sh " + name + str(int(os.environ.get("COUNTER")) + i))
-        time.sleep(0.5)
+    # images = [cv2.imread(file) for file in glob.glob('../images/*.jpg')]
 
-    images = [cv2.imread(file) for file in glob.glob('../images/*.jpg')]
-
-    file_names = [str(file.split("/images/")[1]) for file in glob.glob('../images/*.jpg')]
+    # file_names = [str(file.split("/images/")[1]) for file in glob.glob('../images/*.jpg')]
 
 def clear_images():
     filepath = "../images"
     for file in os.scandir(filepath):
         os.remove(file.path)
-    os.environ["COUNTER"] = "0"
+    with open ('counter.csv','w') as f:
+        write = csv.writer(f)
+        write.writerow([str(0)])
 
 def identifyMovement_ssim(image1, image2, output_file_name_diff, display = False):
     #use structural similarity rather than direct pixel matching
@@ -54,7 +72,8 @@ def identifyMovement_ssim(image1, image2, output_file_name_diff, display = False
         cv2.destroyAllWindows()
 
 def IdentifyMovement(img1, img2):
-    pass
+    diff = cv2.absdiff(img1, img2)
+    print(diff)
 
 
 def identifyFaces(img, name, model = "haarcascade_frontalface_default.xml"):
