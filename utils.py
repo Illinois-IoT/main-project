@@ -15,6 +15,9 @@ def increment_counter():
     with open ('counter.csv','w') as f:
         write = csv.writer(f)
         write.writerow([str(x)])
+def play_alarm():
+    while(True):
+        os.system('./sound.sh ' + str('piano2') + ' 50')
 
 def capture_images(number = 10, prefix = "pic", delay = 0.5, forever = False):
 
