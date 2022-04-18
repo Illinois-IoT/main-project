@@ -5,6 +5,13 @@ import imutils
 import time
 import cv2
 
+
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+LED = 24
+GPIO.setup(LED, GPIO.OUT)
+GPIO.setwarnings(False)
+
 ap = argparse.ArgumentParser()
 ap.add_argument("-v", "--video", help="path to the video file")
 ap.add_argument("-a", "--min-area", type = int, default = 500, help = "minimum area size")
@@ -21,6 +28,7 @@ firstFrame = None
 while True:
 	_, frame = vs.read()
 	text = "Unoccupied"
+	
 	
 	if frame is None:
 		break
