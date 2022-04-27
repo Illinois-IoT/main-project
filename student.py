@@ -5,10 +5,4 @@ import project as proj
 #proj.clear_images()
 
 #proj.capture_images("yay")
-
 proj.convert_to_grayscale("yay.jpg")
-
-
-
-
-

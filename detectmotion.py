@@ -5,12 +5,13 @@ import imutils
 import time
 import cv2
 
+import RPi.GPIO as GPIO 
 
-import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
 LED = 24
 GPIO.setup(LED, GPIO.OUT)
 GPIO.setwarnings(False)
+
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-v", "--video", help="path to the video file")
@@ -28,7 +29,7 @@ firstFrame = None
 while True:
 	_, frame = vs.read()
 	text = "Unoccupied"
-	
+	GPIO.output(LED,False)
 	
 	if frame is None:
 		break
@@ -55,7 +56,9 @@ while True:
 			
 		(x,y,w,h) = cv2.boundingRect(c)
 		cv2.rectangle(frame,(x,y),(x+w,y+h), (0,255,0),2)
-		text = "Occypied"
+		text = "Occupied"
+		GPIO.output(LED,True)
+		
 		
 	cv2.putText(frame, "Room Status: {}".format(text), (10,20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255),2)
 	cv2.putText(frame, datetime.datetime.now().strftime("%A %d %B %Y %I: %M: %S%p"), (10,frame.shape[0]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.35,(0,0,255),1)
@@ -71,3 +74,4 @@ while True:
 vs.stop() if args.get("video", None) is None else vs.release()
 cv2.destroyAllWindows()
 	
+		

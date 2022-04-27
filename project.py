@@ -37,4 +37,3 @@ def clear_images():
         write.writerow([str(0)])
 
 
-
