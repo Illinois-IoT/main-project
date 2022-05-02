@@ -19,8 +19,8 @@ def play_sound(file_name = None, length = -1, volume = 50):
         
 
 def capture_images(name = "pic"):
-    
-    os.system("./capture2.sh " + name)
+        os.system("./capture2.sh " + name)
+        
 def convert_to_grayscale(read = "pic", write = "output"):
     img = cv2.imread("../images/" + read)
     #print(img)
