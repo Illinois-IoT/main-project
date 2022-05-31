@@ -2,7 +2,6 @@ from imutils.video import VideoStream
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 import pygame
-import argparse
 import datetime
 import imutils
 import time
