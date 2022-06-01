@@ -130,7 +130,7 @@ Now, to execute this script, we can go back to the terminal and run
 ./capture.sh
 ```
 
-You'll notice that a new `test.jpg` file was created in your final project folder. It's the image that was just captured! Try running the command again. You'll see that `test.jpg` was replaced with a new image. Lets fix this.
+You'll notice that a new `test.jpg` file was created in your final project folder. It's the image that was just captured! Try running the command again. You'll see that `test.jpg` was replaced with a new image. Let's fix this.
 
 Inside `capture.sh` replace the existing line with
 ``` bash
@@ -171,11 +171,11 @@ In the diagram above, pin 10 is used. Notice how the physical pin 10 is the 5th 
 
 We will need to use the `RPi.GPIO` module. This package provides a Python module to control the GPIO on a Raspberry Pi. But first, we must download the package locally by running 
 ```Bash
-$ pip install RPi.GPIO
+$ pip3 install RPi.GPIO
 ```
 in the terminal.
 
-Now, create a Python file, lets call it `push_botton_capture.py`.
+Now, create a Python file, let's call it `push_botton_capture.py`.
 
 Our initial script will initialize the GPIO port and then continuously read the status of the pin until we exit the program.
 
@@ -198,7 +198,7 @@ while True: # Run forever
         print("Button was pushed!")
 ```
 
-Let's try executing this Python program by running the following in the terminal:
+Let's open your final project folder in the terminal and try executing this Python program by running the following:
 ```Bash
 $ Python3 push_botton_capture.py
 ```
@@ -221,7 +221,7 @@ In our case we want to detect when the button is being pressed, that is going fr
 
 Before we setup the event we must however first write the callback function to be executed when the event is detected. The callback function is a regular Python function and as such can contain any Python code, it could send out a tweet or as we do in our case simply print `Button was pushed!`.
 
-In the top of `push_botton_capture.py`, lets add
+In the top of `push_botton_capture.py`, let's add
 ```Python
 def button_callback(channel):
     print("Button was pushed!")
@@ -234,8 +234,8 @@ GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
 GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
 ```
 
-Finally, lets define the wanted behavior for when a specific event occurs. Note the first parameter defines the channel or pin we're monitoring. The second specifies the rising or falling edge. We use `callback` parameter to register the callback function and `bouncetime` for switch bound handling.
-```
+Finally, let's define the wanted behavior for when a specific event occurs. Note the first parameter defines the channel or pin we're monitoring. The second specifies the rising or falling edge. We use `callback` parameter to register the callback function and `bouncetime` for switch bound handling.
+``` Python
 GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback,bouncetime=200) # Setup event on pin 10 rising edge, ignoring further edges for 200ms
 ```
 
@@ -258,7 +258,7 @@ message = input("Press enter to quit\n\n") # Run until someone presses enter
 GPIO.cleanup() # Clean up
 ```
 
-Lets try executing this file again by running the following in the terminal
+Let's try executing this file again by running the following in the terminal
 ``` Bash
 $ python3 push_button_capture.py
 ```
@@ -272,7 +272,7 @@ We already have a callback function, `button_callback`, that is called whenever 
 
 So, we will need to add something inside of this callback function in order to accomplish our mission.
 
-We already wrote a Bash script that takes a photo. Lets use that! When we wanted to take a photo, we would simply run the Bash script in the terminal. We need a way to run the same script in our Python program.
+We already wrote a Bash script that takes a photo. Let's use that! When we wanted to take a photo, we would simply run the Bash script in the terminal. We need a way to run the same script in our Python program.
 
 This is where the Python `os` module comes into place. This module provides a portable way of using operating system dependent functionality. Some popular functions includes creating and deleting directories/files, and of course, executing other programs.
 
@@ -290,9 +290,9 @@ Try running the Python program again. As you can see, whenever you press the but
 
 ### e) Unique Files for Each Image
 
-We can try naming the images something unique. Lets try using the timestamp for this purpose! 
+We can try naming the images something unique. Let's try using the timestamp for this purpose! 
 
-To do this, lets import the `datetime` package in Python.
+To do this, let's import the `datetime` package in Python.
 ``` Python
 import datetime
 ```
@@ -324,7 +324,6 @@ The final version of `push_button_capture.py` should be the following.
 ``` Python
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 import datetime
-import time
 import os
 
 def button_callback(channel):
@@ -341,7 +340,7 @@ message = input("Press enter to quit\n\n") # Run until someone presses enter
 GPIO.cleanup() # Clean up
 ```
 
-Open your final project folder in terminal and give it a try!
+Try running it in the terminal
 ``` bash
 $ python3 push_button_capture.py
 ```
