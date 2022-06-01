@@ -323,9 +323,16 @@ The final version of `push_button_capture.py` should be the following.
 
 ``` Python
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
+import datetime
+import time
+import os
+
 def button_callback(channel):
     print("Button was pushed!")
-    os.system("./capture.sh " + time_formatted + ".jpg")
+    current_time = datetime.datetime.now()
+    time_formatted = current_time.strftime("%m_%d_%Y--%H_%M_%S")
+    os.system("./capture2.sh " + time_formatted + ".jpg")
+    time.sleep(1)
 
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BOARD) # Use physical pin numbering

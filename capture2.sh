@@ -1,3 +1,3 @@
 #!/bin/bash
 
-libcamera-still -o ../images/$1.jpg
+libcamera-still -o $1.jpg

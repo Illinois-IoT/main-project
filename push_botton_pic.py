@@ -1,13 +1,18 @@
-import sys
-import os
+import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
+import datetime
 import time
-import RPi.GPIO as GPIO
+import os
 
+def button_callback(channel):
+    print("Button was pushed!")
+    current_time = datetime.datetime.now()
+    time_formatted = current_time.strftime("%m_%d_%Y--%H_%M_%S")
+    os.system("./capture2.sh " + time_formatted + ".jpg")
+    time.sleep(1)
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
-while True:
-    if(GPIO.input(10) == GPIO.LOW):
-        print("Hello")
-        time.sleep(0.5)
+GPIO.setwarnings(False) # Ignore warning for now
+GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
+GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback) # Setup event on pin 10 rising edge
+message = input("Press enter to quit\n\n") # Run until someone presses enter
+GPIO.cleanup() # Clean up
