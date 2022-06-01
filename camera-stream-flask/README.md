@@ -29,13 +29,14 @@ sudo apt-get upgrade
 
 sudo apt-get install libatlas-base-dev
 sudo apt-get install libjasper-dev
-sudo apt-get install libqtgui4
-sudo apt-get install libqt4-test
+sudo apt install libqt5gui5 
+sudo apt libqt5webkit5 
+sudo apt libqt5test5 
 sudo apt-get install libhdf5-dev
 
 sudo pip3 install flask
 sudo pip3 install numpy
-sudo pip3 install opencv-contrib-python
+sudo pip3 install opencv-contrib-python==4.5.3.56
 sudo pip3 install imutils
 sudo pip3 install opencv-python
 
