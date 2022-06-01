@@ -85,19 +85,19 @@ Note that the format in which the image is saved depends on the `-e` (equivalent
 
 Now that we know we can use the builtin `libcamera-still` application to take images, lets wrap it up in a Bash script.
 
-Anything you can run normally on the command line can be put into a Bash script and it will do exactly the same thing. Similarly, anything you can put into a Bash script can also be run normally on the command line and it will do exactly the same thing.
+A Bash script is just a series of shell commands written in a file. Anything you can run normally on the command line can be put into a Bash script and it will do exactly the same thing. Similarly, anything you can put into a Bash script can also be run normally on the command line and it will do exactly the same thing.
 
 Bash scripts help us automate tasks by allowing us to run a set of terminal commands all at once.
 
-To start, lets create a `capture.sh` file. This will be the Bash script where we will automate taking images. Once created, it is important to note that the first line of the script must be 
+To start, let's create a `capture.sh` file in your final project folder on the `Desktop`. This will be the Bash script where we will automate taking images. Once created, it is important to note that the first line of the script must be 
 ``` Bash
-#!/bin/Bash
+#!/bin/bash
 ```
-in order to signify that this is in fact a Bash script. This is referred to as the `Shebang`. The hash exclamation mark `(#!)` character sequence is referred to as the Shebang. Following it is the path to the interpreter (or program) that should be used to run (or interpret) the rest of the lines in the text file. For Bash scripts it will be the path to Bash, but there are many other types of scripts and they each have their own interpreter.
+in order to signify that this is in fact a Bash script. This is referred to as the `Shebang`. The hash exclamation mark `(#!)` character sequence is referred to as the Shebang. Following it is the path to the interpreter (or program) that should be used to run (or interpret) the rest of the lines in the text file. For Bash scripts it will be the path to Bash (the common interpreter of shell commands), but there are many other types of scripts and they each have their own interpreter.
 
 In the following lines, we can run any terminal commands we want! For example: 
 ``` Bash
-#!/bin/Bash
+#!/bin/bash
 
 echo Hello
 sleep 1
@@ -116,7 +116,7 @@ into the terminal with 1 second between each print out statement.
 
 For our purpose, we will create a script called `capture.sh` with the following:
 ``` Bash
-#!/bin/Bash
+#!/bin/bash
 
 libcamera-still -o test.jpg
 ```
@@ -130,7 +130,7 @@ Now, to execute this script, we can go back to the terminal and run
 ./capture.sh
 ```
 
-You'll notice that a new `test.jpg` file was created on the `Desktop`. It's the image that was just captured! Try running the command again. You'll see that `test.jpg` was replaced with a new image. Lets fix this.
+You'll notice that a new `test.jpg` file was created in your final project folder. It's the image that was just captured! Try running the command again. You'll see that `test.jpg` was replaced with a new image. Lets fix this.
 
 Inside `capture.sh` replace the existing line with
 ``` bash
@@ -147,7 +147,7 @@ Now, the new image is stored in `image1.jpg`. Run it again but replace `image1.j
 
 ## 3. To Push Some Buttons
 
-What if the monitor suddenly went black... or if the keyboard just randomly decided to stop taking input? How will we take pictures then??
+Now you may be thinking about using your new Raspberry Pi camera on the go, or showing it off at your friend's party, but you certainly don't want to carry those heavy keyboard and monitor. How will we take pictures then?
 
 This is where we will take what we've learned about GPIO pins and put them to good use.
 
@@ -171,7 +171,7 @@ In the diagram above, pin 10 is used. Notice how the physical pin 10 is the 5th 
 
 We will need to use the `RPi.GPIO` module. This package provides a Python module to control the GPIO on a Raspberry Pi. But first, we must download the package locally by running 
 ```Bash
-$ sudo apt-get install Python-rpi.gpio Python3-rpi.gpio
+$ pip install RPi.GPIO
 ```
 in the terminal.
 
@@ -209,11 +209,11 @@ If the program does not work, or continuously outputs `Button was pushed!` witho
 
 ### c) Switching to Event-based GPIO Input
 
-We want the program to only print out `Button was pushed!` once everytime the button is pushed. After all, it is quiet strange for there to be multiple `Button was pushed!` prints when you have only pressed the button once.
+We want the program to only print out `Button was pushed!` once everytime the button is pushed. After all, it is quiet strange for there to be multiple `Button was pushed!` prints when you have only pressed the button once. This is as a result of what is known as 'switch bounce'.
 
-We want to rewrite our program to output a single message whenever the button is pressed rather than continuously outputting a message. To do this we need to use GPIO events.
+We want to rewrite our program to output a single message whenever the button is pressed rather than continuously outputting a message. We can do this using GPIO events.
 
-A GPIO event in the Raspberry Pi Python GPIO library works by calling a Python function whenever an event is triggered. Such a function is called a callback function.
+A GPIO event in the Raspberry Pi Python GPIO library works by calling a Python function whenever an event is triggered. Such a function is called a callback function. A GPIO event also has built-in functionality for switch bounce handling, which will solve our problem!
 
 An event can be an input pin being low or high, but it could also be when the pin changes from low to high – called rising – or when the pin changes from high to low – called falling.
 
@@ -234,9 +234,9 @@ GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
 GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
 ```
 
-Finally, lets define the wanted behavior for when a specific event occurs
+Finally, lets define the wanted behavior for when a specific event occurs. Note the first parameter defines the channel or pin we're monitoring. The second specifies the rising or falling edge. We use `callback` parameter to register the callback function and `bouncetime` for switch bound handling.
 ```
-GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback) # Setup event on pin 10 rising edge
+GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback,bouncetime=200) # Setup event on pin 10 rising edge, ignoring further edges for 200ms
 ```
 
 Lastly, we should instruct Python to wait for keyboard input and when someone presses enter cleanup the GPIO input library resources and finish the program.
@@ -253,7 +253,7 @@ def button_callback(channel):
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
 GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
-GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback) # Setup event on pin 10 rising edge
+GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback,bouncetime=200) # Setup event on pin 10 rising edge, ignoring further edges for 200ms
 message = input("Press enter to quit\n\n") # Run until someone presses enter
 GPIO.cleanup() # Clean up
 ```
@@ -332,17 +332,16 @@ def button_callback(channel):
     current_time = datetime.datetime.now()
     time_formatted = current_time.strftime("%m_%d_%Y--%H_%M_%S")
     os.system("./capture2.sh " + time_formatted + ".jpg")
-    time.sleep(1)
 
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
 GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
-GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback) # Setup event on pin 10 rising edge
+GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback,bouncetime=200) # Setup event on pin 10 rising edge, ignoring further edges for 200ms
 message = input("Press enter to quit\n\n") # Run until someone presses enter
 GPIO.cleanup() # Clean up
 ```
 
-Try running it in the terminal
+Open your final project folder in terminal and give it a try!
 ``` bash
 $ python3 push_button_capture.py
 ```
