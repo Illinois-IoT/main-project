@@ -1,28 +1,33 @@
 ## Day 1
 
-### Objective
+### Objectives
 1. Introduction to project
 2. Learn about GPIO pins
 3. Interface with camera module
 
 ## Day 2
 
-### Objective
+### Objectives
 1. Apply CV concepts learned in lecture
 2. Introduction to OpenCV library 
+3. Image augmentation
 
 ## Day 3
 
-### Objective
-1. Continue using OpenCV to detect motion in camera stream
+### Objectives
+1. Use OpenCV to detect motion in camera stream
 
 ## Day 4
 
-### Objective
+### Objectives
+
 1. Introduction to Flask
 2. Create a server to stream camera feed 
 
 ## Day 5
 
 ### Objective
-1. Catch up
+
+1. Integrate Flask server with existing ML models
+2. Interface with speaker module
+3. Catch up
