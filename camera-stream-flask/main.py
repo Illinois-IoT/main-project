@@ -1,14 +1,13 @@
 #Desc: This web application serves a motion JPEG stream
 # main.py
 # import the necessary packages
-from flask import Flask, render_template, Response, request, send_from_directory
+from flask import Flask, render_template, Response
 from picamera.array import PiRGBArray
 from picamera import PiCamera
-import os
 import cv2
 
 pi_camera = PiCamera()
-pi_camera.resolution = size=(640, 480)
+pi_camera.resolution = (640, 480)
 raw_capture = PiRGBArray(pi_camera, size=(640, 480))
 
 # App Globals (do not edit)
@@ -16,7 +15,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html') #you can customze index.html here
+    return render_template('index.html')
 
 def gen(camera):
     #get camera frame

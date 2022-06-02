@@ -14,13 +14,13 @@ We would then need to figure out a way to detect any motion in the stream. We'll
 
 ## 1. Steady Camera Stream
 
-First things first, lets stream the camera in Python. To do this, we will need the `picamera` module. Run the following in the terminal to download the neccessary packages:
+First things first, let's stream the camera in Python. To do this, we will need the `picamera` module. Run the following in the terminal to download the neccessary packages:
 ```bash
 $ python3 -c "import picamera"
 ```
 ### a) Access Single Images
 
-Lets start by accessing a single image from the camera stream. Create a new Python file called `motion_detection.py`
+Let's start by accessing a single image from the camera stream. Create a new Python file called `motion_detection.py`
 
 First, import the required libraries
 
@@ -51,7 +51,7 @@ camera.capture(raw_capture, format="bgr")
 image = raw_capture.array
 ```
 
-Now, lets display the image on the screen by using `cv2.imshow()`. 
+Now, let's display the image on the screen by using `cv2.imshow()`. 
 ``` Python
 cv2.imshow("Image", image)
 cv2.waitKey(0) # wait indefinitely until a key is pressed
@@ -79,7 +79,7 @@ The `capture_continuous` method returns a frame from the video stream. The frame
 
 Also, within the loop, we have to clear the `raw_capture` stream to get ready for the next frame.
 ``` Python
-raw_capture.truncate(0)
+raw_capture.truncate()
 raw_capture.seek(0)
 ```
 
@@ -113,7 +113,7 @@ for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port
 	# show the frame
 	cv2.imshow("Frame", image)
 	# clear the stream in preparation for the next frame
-	raw_capture.truncate(0)
+	raw_capture.truncate()
     raw_capture.seek(0)
     
     # exit the loop when `q` is pressed
@@ -129,7 +129,7 @@ $ python3 motion_detection.py
 
 ## 2. What's the Difference?
 
-Now, lets revisit our initial question. How do we detect motion within a camera stream? Hint: think of the camera stream as a series of image frames that are just shown in rapid succession.
+Now, let's revisit our initial question. How do we detect motion within a camera stream? Hint: think of the camera stream as a series of image frames that are just shown in rapid succession.
 
 ![](day3_frames.jpeg)
 
@@ -167,7 +167,7 @@ We will use background subtraction to detection motion because the background of
 
 ### Implement Background Subtraction
 
-Lets go back to our previous `motion_detection.py` file.
+Let's go back to our previous `motion_detection.py` file.
 
 We will first need to augment the incoming images. Let's convert the image to grayscale as color has no bearing on motion detection other than adding noise to the data. We also apply Gaussian blurring to smooth our images.
 
@@ -190,7 +190,7 @@ Here, if we see that there is currently no reference frame, we will use the imag
 
 Now that we have our background modeled via the `reference_frame` variable, we can utilize it to compute the difference between the initial frame and subsequent new frames from the video stream.
 
-Lets compute the absolute difference between the current frame and the reference frame.
+Let's compute the absolute difference between the current frame and the reference frame.
 ``` Python
 frame_delta = cv2.absdiff(reference_frame,current_frame)
 thresh = cv2.threshold(frame_delta, 25, 255, cv2.THRESH_BINARY)[1]
@@ -236,9 +236,9 @@ To review, here is what we accomplished:
 
 ### Wrapping Up
 
-To wrap up, lets visualize everything we have computed above using `cv2.imshow`.
+To wrap up, let's visualize everything we have computed above using `cv2.imshow`.
 
-First, lets show whether motion was or was not detected, along with the date.
+First, let's show whether motion was or was not detected, along with the date.
 ``` Python
 cv2.putText(image, "Motion: {}".format(maybe_motion_text), (10,20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255),2)
 cv2.putText(image, datetime.datetime.now().strftime("%A %d %B %Y %I: %M: %S%p"), (10,image.shape[0]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.35,(0,0,255),1)
@@ -246,7 +246,7 @@ cv2.putText(image, datetime.datetime.now().strftime("%A %d %B %Y %I: %M: %S%p"),
 
 Here, we use a `maybe_motion_text` variable to store whether there was motion. Think about where you need to initalize this variable and when to change it in your code. If you need help, look to the full code script below.
 
-Now, lets open up three windows.
+Now, let's open up three windows.
 
 ``` Python
 cv2.imshow("Feed", image)
