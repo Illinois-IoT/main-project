@@ -6,9 +6,9 @@ from picamera.array import PiRGBArray
 from picamera import PiCamera
 import cv2
 
-pi_camera = PiCamera()
-pi_camera.resolution = (640, 480)
-raw_capture = PiRGBArray(pi_camera, size=(640, 480))
+camera = PiCamera()
+camera.resolution = (640, 480)
+raw_capture = PiRGBArray(camera, size=(640, 480))
 
 # App Globals (do not edit)
 app = Flask(__name__)
@@ -17,8 +17,8 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-def gen(camera):
-    #get camera frame
+def get_feed(camera):
+    #get camera frames
     for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
         image = frame.array
         _, image = cv2.imencode(".jpg", image)
@@ -29,7 +29,7 @@ def gen(camera):
 
 @app.route('/video_feed')
 def video_feed():
-    return Response(gen(pi_camera),
+    return Response(get_feed(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':

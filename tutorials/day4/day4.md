@@ -108,8 +108,8 @@ import flask
 app = Flask(__name__)
 
 if __name__ == '__main__':
-    APP.debug=True
-    APP.run()
+    app.debug=True
+    app.run()
 ```
 
 Perfect. Now you have a flask app! But as you probably already guessed, our app doesn't do anything. We need to create accessible routes.
@@ -194,3 +194,145 @@ Not only do you have to know a server's IP address, you also have to know which 
 Imaging you want to run two web apps at the same time on the same machine. How do you do that? If you go to `http://192.168.0.108`, which web page should be shown? That is why we need ports. By default flask servers are run on port 5000 (but you can change that if you want). If you tried running a different web app at the same time, you will need to specify a different port number (lets say 5001). Then, to access the first webpage, you can go to `http://192.168.0.108:5000` and to access the second, you can go to `http://192.168.0.108:5001`.
 
 Phew we're finally done with the introduction. Lets move on to creating a web app for your smart doorbell system!
+
+## Who's At the Door?
+
+In reality, a smart doorbell is not very smart if you don't know who is there. That's why today we will create a web app that allows you to stream the camera feed from another device!
+
+By the end of today, you will be able to open your phone and see what your camera sees.
+
+Lets get started.
+
+### a) Setting up Flask
+
+Like before, we need to create a new project folder. Lets call it `camera_streamer/`
+
+``` bash
+$ mkdir -p camera_streamer/{templates,static}
+```
+
+This should create the following directory structure:
+``` bash
+camera_streamer/
+|-- static
+|-- templates
+```
+
+Now, lets create the server file. Inside the `camera_streamer/` folder, create a new file called `main.py`.
+
+Inside, we will use the following starter code:
+
+``` Python
+from flask import Flask, render_template, Response
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.debug=False
+    app.run()
+```
+
+Then, create `index.html` inside of `templates/` with the following code:
+
+``` HTML
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset="utf-8" />
+  <title>Hello world!</title>
+  <link type="text/css" rel="stylesheet"
+        href="{{ url_for('static',
+              filename='hello.css')}}" />
+</head>
+<body>
+</body>
+</html>
+```
+
+### b) Creating the UI
+
+Next, lets create the main web page with a placeholder for the video feed.
+
+Navigate to `index.html`.
+
+Inside the `<body></body>` tags, add the following:
+
+``` HTML
+<div class="main" id="newpost">
+    <img class="camera-bg" style="width: 100%; height:100%; background-attachment: fixed;" id="bg" class="center"
+      src="{{ url_for('video_feed') }}">
+</div>
+```
+
+Here, we are creating a `div`. In HTML, `div`s are divisions or sections, and is mainly used to create containers for other elements.
+
+Inside this division, we are creating an `img` (image) element. We initialize this element with several visual (or `style`) attributes. First, we say that the `width` and `height` should be `100%` of its parent container. Then, the `background-attachment` should have a fixed position (no need to worry about what this means). We need to specify a `src` (or source) for this image. The `src` is how the browser knows where to look for the image before its able to display it.
+
+Here, the source of the image we want to display is dynamically set. In flask, we can use `url_for` to specify a route that will supply the image. Here, that route is `/video_feed`.
+
+### c) A New Route
+
+In `index.html`, we specified the route `/video_feed`. Now we must add functionality to this route on the backend.
+
+Open `main.py`.
+
+Inside, we will add a new method for this route.
+
+``` Python
+@app.route('/video_feed')
+def video_feed():
+    return None
+```
+
+To get the video feed, we first need to setup the camera (like we did before).
+
+``` Python
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+
+camera = PiCamera()
+camera.resolution = (640, 480)
+raw_capture = PiRGBArray(camera, size=(640, 480))
+```
+
+Now, lets create a helper function to get the frame. This is also exactly what we have done before.
+
+``` Python
+def get_feed(camera):
+    #get camera frames
+    for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
+        image = frame.array
+        _, image = cv2.imencode(".jpg", image)
+        raw_capture.truncate()
+        raw_capture.seek(0)
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + image.tobytes() + b'\r\n\r\n')
+```
+
+Here, we loop through all of the frames in a continuous capture feed. Then, we must convert the frame to bytes. To do so, we must first use `OpenCV` to encode it into a jpg using `cv2.imencode`. Next, we will convert it into bytes using the `tobytes()` function.
+
+Finally, we want to send the frame as an image in the response. Remember that when we learned about HTTP requests and responses, the response can be on various types. To send an image response back to the end, we will define the `Content-Type` to be `image/jpeg`.
+
+Now that we have a helper function that returns each frame, lets go back to `video_feed()`. Here, we want to have flask help us respond to the request. Flask has a `Response()` method for this reason. Without having to worry too much about what this builtin function does, we will use it in `video_feed` to return a constant stream of image frames to the client.
+
+The final `video_feed()` function should look like this:
+
+``` Python 
+@app.route('/video_feed')
+def video_feed():
+    return Response(get_feed(camera),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+```
+
+And that's it! You have just created a web app using Flask that streams the feed of the camera attached to your Raspberry Pi. To execute this, go to the terminal and run
+``` bash
+$ python main.py
+```
+
+Now, if you visit `http://127.0.0.1:5000` on your Raspberry Pi, you should see a real-time stream of your camera! 
+
+To access this page from your phone, you will need the IP address of your Raspberyy Pi (revisit how to do so above). Make sure your phone is on the same Wi-Fi network as your Raspberry Pi. Then all you need to do is visit `http://<Raspberry Pi's IP>:5000` on your device!
