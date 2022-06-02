@@ -39,10 +39,10 @@ Let's also change the camera resolution to `640x480` pixels. This dimension is a
 camera = PiCamera()
 camera.resolution = (640, 480)
 raw_capture = PiRGBArray(camera, size=(640, 480))
-time.sleep(0.1) # allow time for the camera to warmup
+time.sleep(1) # allow time for the camera to warmup
 ```
 
-Next, we will capture a frame by calling `capture()` on the camera object we previously created. Be aware that the format is `BGR` and not the traditional `RGB`. This is extremely important because `OpenCV` represents images as `Numpy` arrays in `BGR` order rather than `RGB`. This little nuisance is subtle, but very important to remember as it can lead to some confusing bugs in your code down the line.
+Next, we will capture a frame by calling `capture()` on the camera object we previously created. Be aware that the format is `BGR` and not the traditional `RGB`. This is extremely important because `OpenCV` represents images as `Numpy` arrays in `BGR` order rather than `RGB`. This little nuance is subtle, but very important to remember as it can lead to some confusing bugs in your code down the line.
 
 
 ``` Python
@@ -54,7 +54,7 @@ image = raw_capture.array
 Now, lets display the image on the screen by using `cv2.imshow()`. 
 ``` Python
 cv2.imshow("Image", image)
-cv2.waitKey(0)
+cv2.waitKey(0) # wait indefinitely until a key is pressed
 ```
 
 Test that this is working by running
@@ -64,11 +64,11 @@ $ python3 motion_detection.py
 
 ### b) Constant Streaming
 
-Now that we have successfully used `OpenCV` to grab a single image from the camera, lets move on to a video stream.
+Now that we have successfully used `OpenCV` to grab a single image from the camera, let’s move on to a video stream.
 
 The concept is similar to how we got a single image above. But instead of calling `capture` on the camera object, we will call `capture_continuous` instead. Intuitive right?
 
-But in order to process each indivdual frame in this continuous stream, we will need a for loop:
+But in order to process each individual frame in this continuous stream, we will need a for loop:
 
 ``` Python
 for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
@@ -83,6 +83,14 @@ raw_capture.truncate(0)
 raw_capture.seek(0)
 ```
 
+Finally, let’s wait for an escape key to be pressed in order to exit out of the infinite loop.
+
+```Python
+key = cv2.waitKey(1) # get the key pressed in the last millisecond
+if key == ord("q"):
+        break
+```
+
 In summary, you should have the following code in `motion_detection.py`
 
 ``` Python
@@ -95,7 +103,7 @@ camera = PiCamera()
 camera.resolution = (640, 480)
 raw_capture = PiRGBArray(camera, size=(640, 480))
 # allow the camera to warmup
-time.sleep(0.1)
+time.sleep(1)
 
 # capture frames from the camera
 for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
@@ -104,13 +112,14 @@ for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port
 	image = frame.array
 	# show the frame
 	cv2.imshow("Frame", image)
-	key = cv2.waitKey(1) & 0xFF
 	# clear the stream in preparation for the next frame
 	raw_capture.truncate(0)
     raw_capture.seek(0)
-	# if the `q` key was pressed, break from the loop
+    
+    # exit the loop when `q` is pressed
+    key = cv2.waitKey(1)
 	if key == ord("q"):
-		break
+        break
 ```
 
 To run this program, go to the terminal and execute
@@ -143,11 +152,12 @@ Any robust background subtraction model should be able to handle light intensity
 ![](day3_background_subtraction.png)
 
 Mathematically it can be modelled as;
+
 ```
-| Framei  – Framei-1 | > Threshold
+|reference_frame – current_frame| > Threshold
 ```
 
-The estimated background using the Frame Difference approach is just the previous frame estimated by the above empirical way. This approach can be used when segment motion-based objects such as cars, pedestrians etc. 
+This approach can be used when segment motion-based objects such as cars, pedestrians etc. 
 
 And it is very sensitive to threshold values. So depending on object structure, speed, frame rate and global threshold limit this approach has limited use cases.
 
@@ -159,20 +169,20 @@ We will use background subtraction to detection motion because the background of
 
 Lets go back to our previous `motion_detection.py` file.
 
-We will first need to augment the incoming images. Let's convert the image to grayscale and apply Gaussian blurring to smooth our images.
+We will first need to augment the incoming images. Let's convert the image to grayscale as color has no bearing on motion detection other than adding noise to the data. We also apply Gaussian blurring to smooth our images.
 
 ``` Python
-gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-gray = cv2.GaussianBlur(gray,(21,21),0)
+current_frame = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+current_frame = cv2.GaussianBlur(current_frame,(21,21),0)
 ```
 
 Due to tiny variations in the digital camera sensors, no two frames will be 100% the same — some pixels will most certainly have different intensity values. That said, we need to account for this and apply Gaussian smoothing to average pixel intensities across an 21 x 21 region. This helps smooth out high frequency noise that could throw our motion detection algorithm off.
 
-We will need to store the first image input as the reference frame.
+For simplicity, let’s assume that the first frame we capture will contain no motion and just background. (Make sure the assumption is satisfied when you run the program.) So, we will store the first image input as the reference frame.
 
 ``` Python
 if reference_frame is None:
-    reference_frame = gray
+    reference_frame = current_frame
     continue
 ```
 
@@ -182,7 +192,7 @@ Now that we have our background modeled via the `reference_frame` variable, we c
 
 Lets compute the absolute difference between the current frame and the reference frame.
 ``` Python
-frame_delta = cv2.absdiff(last_frame,gray)
+frame_delta = cv2.absdiff(reference_frame,current_frame)
 thresh = cv2.threshold(frame_delta, 25, 255, cv2.THRESH_BINARY)[1]
 ```
 This will take the pixel density difference between the current and reference frames using the following formula:
@@ -246,13 +256,6 @@ cv2.imshow("Frame Delta", frame_delta)
 
 The first window will be our image (with bounding boxes around any detected motion). We will also open windows to show the frame delta and thresholded images (just for fun :D).
 
-Finally, lets wait for an escape key to be pressed in order to exit out of the infinite loop.
-
-``` Python
-if key == ord("q"):
-        break
-```
-
 ### Full Python Program
 
 ``` Python
@@ -279,14 +282,14 @@ for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port
     if image is None:
         break
 
-    gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-    gray = cv2.GaussianBlur(gray,(21,21),0)
+    current_frame = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+    current_frame = cv2.GaussianBlur(gray,(21,21),0)
 
     if reference_frame is None:
-        reference_frame = gray
+        reference_frame = current_frame
         continue
         
-    frame_delta = cv2.absdiff(reference_frame,gray)
+    frame_delta = cv2.absdiff(reference_frame,current_frame)
     thresh = cv2.threshold(frame_delta, 25,255,cv2.THRESH_BINARY)[1]
     
     thresh = cv2.dilate(thresh,None,iterations=2)
@@ -307,8 +310,8 @@ for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port
     cv2.imshow("Feed", image)
     cv2.imshow("Threshold", thresh)
     cv2.imshow("Frame Delta", frame_delta)
-    key = cv2.waitKey(1) & 0xFF
-
+    
+    key = cv2.waitKey(1)
     if key == ord("q"):
         break
 
