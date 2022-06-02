@@ -20,17 +20,18 @@
 
   <div class="top-right-logo">
     <a></a>Raspberry Pi - Camera Stream</a>
+    <ol id="recordingsList"></ol>
   </div>
 
   <div class="navbar">
 
-    <div class="recordAudio">
-      <a id=decline class="but_def">
-        <button id="button">
-          <i style="background: red; color: white;" class="fa fa-microphone fa-2x" aria-hidden="true"></i>
-        </button>
-      </a>
-    </div>
+    <button id="recordButton">
+      <i style="background: red; color: white;" class="fa fa-microphone fa-2x" aria-hidden="true"></i>
+    </button>
+
+    <button id="stopButton">
+      <i style="background: red; color: white;" class="fa fa-stop fa-2x" aria-hidden="true"></i>
+    </button>
 
   </div>
 
@@ -47,6 +48,10 @@
       }
     };
   </script>
+
+  <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+  <script src="{{ url_for('static', filename='recordAudio.js') }}"></script>
+
 
 </body>
 
