@@ -35,20 +35,6 @@
 
   </div>
 
-  <script type="text/javascript">
-    // stop stream - called when pressing red X
-    var button = document.getElementById('button');
-
-    button.onclick = function () {
-      var div = document.getElementById('newpost');
-      if (div.style.display !== 'none') {
-        div.style.display = 'none';
-      } else {
-        div.style.display = 'block';
-      }
-    };
-  </script>
-
   <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
   <script src="{{ url_for('static', filename='recordAudio.js') }}"></script>
 

@@ -79,10 +79,6 @@ function stopRecording() {
     //disable the stop button, enable the record too allow for new recordings
     stopButton.disabled = true;
     recordButton.disabled = false;
-    pauseButton.disabled = true;
-
-    //reset button just in case the recording is stopped while paused
-    pauseButton.innerHTML = "Pause";
 
     //tell the recorder to stop the recording
     rec.stop();

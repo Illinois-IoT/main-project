@@ -33,7 +33,7 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/upload', methods = ['POST'])
-def video_feed():
+def upload_audio():
     if request.method == 'POST':
         f = request.files['audio_data']
         f.save(secure_filename(f.filename))
