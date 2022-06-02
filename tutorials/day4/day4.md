@@ -94,5 +94,103 @@ hello_flask/
 |-- templates
 ```
 
-The `templates/` folder is the place where the templates will be put. The `static/` folder is the place where any files (images, css, javascript) needed by the web application will be put.
+The `templates/` folder is the place where the templates will be put. The `static/` folder is the place where any files (images, css, javascript) needed by the web application will be put. These two folders define what the frontend of the web app will look like.
 
+Now, inside of `hello_fask/` we will create the server file. This is the "backend" of our app. Think of the backend as where all of the HTTP requests are processed and what response is sent back.
+
+Create a `main.py` inside of `hello_flask/`.
+
+Inside of `main.py`, we will first need to import flask. Then, we create the application.
+
+``` Python
+import flask
+
+app = Flask(__name__)
+
+if __name__ == '__main__':
+    APP.debug=True
+    APP.run()
+```
+
+Perfect. Now you have a flask app! But as you probably already guessed, our app doesn't do anything. We need to create accessible routes.
+
+``` Python
+@app.route('/')
+def index():
+    """ Displays the index page accessible at '/'
+    """
+    return flask.render_template('index.html')
+```
+
+What this method does is whenever someone goes to the uri `/`, it will render `index.html`.
+
+App routing means mapping the urls to a specific function that will handle the logic for that url. For example, in our Python code, we defined the route `/` for the method called `index()`. This means whenever someone goes to `www.example.com/`, the function `index()` is run and whatever is the `return` of that method also gets returned to the browser.
+
+Similarly, if you defined the route `/hello` for a method called `hello_func`, then whenever someone accesses `www.example.com/hello`, the `hello_func` is called.
+
+Now, let's create a simple `index.html` that displays `"Hello World"`. Inside of `templates/`, create a new file called `index.html`.
+
+Inside, lets put 
+``` HTML
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset="utf-8" />
+  <title>Hello world!</title>
+  <link type="text/css" rel="stylesheet"
+        href="{{ url_for('static',
+              filename='hello.css')}}" />
+</head>
+<body>
+
+It works!
+
+</body>
+</html>
+```
+
+Now we can run our web app! 
+
+``` bash
+$ python hello_flask.py
+```
+
+Now in your browser, navigate to `http://127.0.0.1:5000/` and you should see the following
+
+![](day4_hello_flask_Index.png)
+
+### f) A Little Bit on IP Addresses and Ports
+
+Now you might be wondering why the url we typed in is a series of numbers. This has to do with IP. IP stands for "Internet Protocol," which is the set of rules governing the format of data sent via the internet or local network. In essence, IP addresses are the identifier that allows information to be sent between devices on a network: they contain location information and make devices accessible for communication.
+
+Every device has its own IP address. You can find the IP address of your Raspberry Pi by running `ifconfig` in the terminal. In the printout, find `etho0` and the numbers after `inet address` is your IP address!
+
+![](day4_ip_address_pi.png)
+
+IP addresses are very useful. If I wanted to access a file on your computer, I would first need to know your IP address (and then get to hacking). If I wanted to send you a file, I would also need to know your IP address so that the file is sent to the right device.
+
+There is a lot to know when it comes to IP address, and since it is simply a protocol (a set of rules), the protocol can change. There are currently two forms of IP address: IPv4 and IPv6. There is no need to know much about them, but the main differences are defined below.
+
+![](day4_ipv4_ipv6.webp)
+
+When the internet was first created, IPv4 was sufficient in identifying all devices on the network. But as the internet grew, we soon realized that there is not enough unique identifiers! So IPV6 was introduced so that each device can have its own unique address.
+
+For now, we will stick with IPv4 address, which is a string of 4 numbers (between 0 and 255) separated by periods. So, the full IP addressing range goes from 0.0.0.0 to 255.255.255.255.
+
+There is one special address you should remember that that is `127.0.0.1`. This is known as your localhost (or home). You might have even seen memes online like this:
+
+![](day4_home_meme.webp)
+
+and now you know what it means! When you ran the flask server, you can access it locally (on the same computer) by going to `http://127.0.0.1`. Try going to the same address on your phone and you'll find that there is nothing there.
+
+That is because to access a server on the same network, you must go to its IP address. So for example, if I run the flask server on my Raspberry Pi which has an IP address of `192.168.0.108`, I can go on my phone (that's connected to the same Wi-Fi network) and type in `http://192.168.0.108:5000` to see the web app you just created.
+
+### g) Where Did the `:5000` Come From?
+
+As you have noticed, you cannot simply go to `http://192.168.0.108` to access the web app. You have to go to `http://192.168.0.108:5000`. This is because your web app is run on port 5000.
+
+Not only do you have to know a server's IP address, you also have to know which port the server is run on.
+
+Imaging you want to run two web apps at the same time on the same machine. How do you do that? If you go to `http://192.168.0.108`, which web page should be shown? That is why we need ports. By default flask servers are run on port 5000 (but you can change that if you want). If you tried running a different web app at the same time, you will need to specify a different port number (lets say 5001). Then, to access the first webpage, you can go to `http://192.168.0.108:5000` and to access the second, you can go to `http://192.168.0.108:5001`.
+
+Phew we're finally done with the introduction. Lets move on to creating a web app for your smart doorbell system!
