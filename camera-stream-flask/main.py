@@ -1,7 +1,7 @@
 #Desc: This web application serves a motion JPEG stream
 # main.py
 # import the necessary packages
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, request
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 import cv2
@@ -32,6 +32,12 @@ def video_feed():
     return Response(get_feed(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-if __name__ == '__main__':
+@app.route('/upload', methods = ['POST'])
+def upload_audio():
+    if request.method == 'POST':
+        f = request.files['audio_data']
+        f.save(secure_filename(f.filename))
+        return "File saved successfully"
 
+if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=False)

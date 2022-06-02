@@ -4,7 +4,7 @@
 <head>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 
 <title>Make - PiStream</title>
@@ -20,33 +20,24 @@
 
   <div class="top-right-logo">
     <a></a>Raspberry Pi - Camera Stream</a>
+    <ol id="recordingsList"></ol>
   </div>
 
   <div class="navbar">
 
-    <div class="recordAudio">
-      <a id=decline class="but_def">
-        <button id="button">
-          <i style="background: red; color: white;" class="fa fa-microphone fa-2x" aria-hidden="true"></i>
-        </button>
-      </a>
-    </div>
+    <button id="recordButton">
+      <i style="background: red; color: white;" class="fa fa-microphone fa-2x" aria-hidden="true"></i>
+    </button>
+
+    <button id="stopButton">
+      <i style="background: red; color: white;" class="fa fa-stop fa-2x" aria-hidden="true"></i>
+    </button>
 
   </div>
 
-  <script type="text/javascript">
-    // stop stream - called when pressing red X
-    var button = document.getElementById('button');
+  <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+  <script src="{{ url_for('static', filename='recordAudio.js') }}"></script>
 
-    button.onclick = function () {
-      var div = document.getElementById('newpost');
-      if (div.style.display !== 'none') {
-        div.style.display = 'none';
-      } else {
-        div.style.display = 'block';
-      }
-    };
-  </script>
 
 </body>
 
