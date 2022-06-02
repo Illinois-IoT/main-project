@@ -140,9 +140,6 @@ body {
   	<a></a>Raspberry Pi - Camera Stream</a>
   </div>
 
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
 <script type="text/javascript">
 
 // stop stream - called when pressing red X
@@ -157,18 +154,6 @@ button.onclick = function() {
         div.style.display = 'block';
     }
 };
-
-// Take and save a photo, call picture function in main.py
-$(function() {
-  $('a#take-picture').on('click', function(e) {
-    e.preventDefault()
-    $.getJSON('/picture',
-        function(data) {
-      //do nothing
-    });
-    return false;
-  });
-});
 
 </script>
 

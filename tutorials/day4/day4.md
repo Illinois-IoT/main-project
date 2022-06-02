@@ -1,0 +1,98 @@
+# Day 4
+
+## Introduction
+
+### a) What is a Web Server?
+
+In a nutshell, a web server is both the hardware and software required to create a website that you can access via the internet.
+
+For example, if you go to `amazon.com`, a request is made from your computer to a server owned by Amazon. The returned result is what you see on your screen. If you want to access any piece of data/information through the internet, that data/information must be stored somewhere and there must be some sort of software to help you access it.
+
+On the hardware side, a web server is a computer that stores web server software and a website's component files (for example, HTML documents, images, CSS stylesheets, and JavaScript files). A web server connects to the internet and supports physical data interchange with other devices connected to the web.
+
+On the software side, a web server includes several parts that control how web users access hosted files.
+
+### b) How Does Your Browser Know What to Show?
+
+This is where HTTP requests come in. HTTP (Hypertext Transfer Protocol) is a protocol (or set of rules) that specifies how hypertext (linked web documents) are transferred to and from the web server. 
+
+At the most basic level, whenever a browser needs a file that is hosted on a web server, the browser requests the file via HTTP. When the request reaches the correct (hardware) web server, the (software) HTTP server accepts the request, finds the requested document, and sends it back to the browser, also through HTTP.
+
+![](day4_http.svg)
+
+What are some examples of requests made from a browser to a web server?
+
+1. when you type in `amazon.com`, a request is made for the contents of the main page. The response are files (HTML/CSS, etc.) that specify to the browser how and what to display.
+
+2. every query (or question) you type into `Google` is a request made to the Google servers. The request includes your query string. Your browser will then receive back a response that consists of a list of relavent links.
+
+3. every video you watch on `YouTube` requires HTTP requests. Your browser requests the video from YouTube's servers and once it is received, you can view it on your screen.
+
+![](day4_http_get.png)
+
+### c) Types of HTTP Requests
+
+Now that we know how our browser can receive data from any web server, how do we contribute to the web? 
+
+Everyday, over 95 million photos and videos are shared on Instagram. There's also 720,000 hours of video being uplaoded to YouTube on the daily. Lets look at the technical mechanics of how these pieces of media is posted onto the internet for everyone to see.
+
+Above, we discussed how your browser loads data. They do it by `GET`ting data from a web server. Now, when you want to post a new Instagram post, your browser will need to `POST` to the web server. What about when you want to edit a caption? Well, that's a `PUT` request. And when you decide that your post is no longer relavent, you can `DELETE` from the web server.
+
+Lets summarize. Here are the most common HTTP requests. There are others like `PATCH` or `OPTIONS`, but we will not cover them here.
+
+#### GET
+
+The HTTP `GET` method is used to **read** (or retrieve) a representation of a resource. `GET` requests are only for reading data, and not changing it.
+
+#### POST
+
+The `POST` verb is most-often utilized to **create** new resources.
+
+#### PUT
+
+`PUT` is most-often utilized for **update** capabilities, PUT-ing to a known resource URI with the request body containing the newly-updated representation of the original resource.
+
+#### DELETE
+
+`DELETE` is pretty easy to understand. It is used to **delete** a resource identified by a URI.
+
+### d) Putting it All Together
+
+Here is an example of a HTTP request:
+
+![](day4_http_request_format.png)
+
+It starts with a **method** (a verb we learned about above), followed by the path to the resource to fetch. An example of a path is `google.com` or `instagram.com/illinoiscs`. Then, we will specify the vertion of the HTTP protocol we want to use (don't worry about this for now). And finally, any optional headers we want to send to the server is included.
+
+Next, here is an example of a response from the server:
+
+![](day4_http_response_format.png)
+
+We will not go into details about the response format, but feel free to do some extra reading on your own!
+
+The only thing is note is the `Content-Type`. The server can respond with a myriad of different data types, including `text/html` for textual results, `image/jpeg` for images, `video/mp4` for videos.
+
+### e) All About Flask
+
+Now that we know about how web servers work, lets discuss how we can create one ourselves using Python.
+
+Flask is a web framework in Python. This means flask provides you with tools, libraries and technologies that allow you to build a web application. This web application can be some web pages, a blog, a wiki or go as big as a web-based calendar application or a commercial website.
+
+We will start by writting a `"Hello World"` application in Flask.
+
+To begin, we will need to create a new folder to store our web application.
+
+``` bash
+$ mkdir -p hello_flask/{templates,static}
+```
+
+This will create the following structure. The `hello_fask/` folder is the root folder of our web app and there are 2 subfolders inside.
+
+``` bash
+hello_flask/
+|-- static
+|-- templates
+```
+
+The `templates/` folder is the place where the templates will be put. The `static/` folder is the place where any files (images, css, javascript) needed by the web application will be put.
+
