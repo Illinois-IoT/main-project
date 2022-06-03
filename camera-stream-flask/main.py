@@ -36,8 +36,8 @@ def video_feed():
 def upload_audio():
     if request.method == 'POST':
         f = request.files['audio_data']
-        f.save(secure_filename(f.filename))
+        f.save(f.filename)
         return "File saved successfully"
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False)
+    app.run(host='0.0.0.0', debug=False, ssl_context="adhoc")

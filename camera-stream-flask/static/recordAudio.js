@@ -12,6 +12,10 @@ var audioContext //audio context to help us record
 var recordButton = document.getElementById("recordButton");
 var stopButton = document.getElementById("stopButton");
 
+//only display recordButton initially 
+recordButton.style.display = "block";
+stopButton.style.display = "none";
+
 //add events to those 2 buttons
 recordButton.addEventListener("click", startRecording);
 stopButton.addEventListener("click", stopRecording);
@@ -26,10 +30,10 @@ function startRecording() {
     var constraints = { audio: true, video: false }
 
     /*
-      Disable the record button until we get a success or fail from getUserMedia() 
+      Hide the record button until we get a success or fail from getUserMedia() 
     */
-    recordButton.disabled = true;
-    stopButton.disabled = false;
+    recordButton.style.display = "none";
+    stopButton.style.display = "block";
 
     /*
         We're using the standard promise based getUserMedia() 
@@ -45,9 +49,6 @@ function startRecording() {
 
         */
         audioContext = new AudioContext();
-
-        //update the format 
-        document.getElementById("formats").innerHTML = "Format: 1 channel pcm @ " + audioContext.sampleRate / 1000 + "kHz"
 
         /*  assign to gumStream for later use  */
         gumStream = stream;
@@ -67,18 +68,18 @@ function startRecording() {
         console.log("Recording started");
 
     }).catch(function (err) {
-        //enable the record button if getUserMedia() fails
-        recordButton.disabled = false;
-        stopButton.disabled = true;
+        //show the record button if getUserMedia() fails
+        recordButton.style.display = "block";
+        stopButton.style.display = "none";
     });
 }
 
 function stopRecording() {
     console.log("stopButton clicked");
 
-    //disable the stop button, enable the record too allow for new recordings
-    stopButton.disabled = true;
-    recordButton.disabled = false;
+    //hide the stop button, show the record too allow for new recordings
+    recordButton.style.display = "block";
+    stopButton.style.display = "none";
 
     //tell the recorder to stop the recording
     rec.stop();
