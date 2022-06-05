@@ -29,7 +29,8 @@ def get_camera_frame(camera):
                b'Content-Type: image/jpeg\r\n\r\n' + image.tobytes() + b'\r\n\r\n')
 
 def get_live_transcription():
-    popen = subprocess.Popen("spchcat", stdout=subprocess.PIPE)
+    cmd = "spchcat"
+    popen = subprocess.Popen(cmd, stdout=subprocess.PIPE)
     for stdout_line in iter(popen.stdout.readline, b""):
         yield stdout_line
     popen.stdout.close()
@@ -44,8 +45,8 @@ def video_feed():
 
 @app.route('/transcript_feed')
 def transcript_feed():
-    return Response(get_live_transcription(camera),
-                    mimetype='mimetype='text/html')
+    return Response(get_live_transcription(),
+                    mimetype='text/html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=False)
