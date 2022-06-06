@@ -43,22 +43,22 @@ We will achieve this through several parts. Today, you will begin by learning ab
 
 ## 1. Take a picture
 
-To take a picture, we will use the builtin library `libcamera`. It is a software library aimed at supporting complex camera systems directly from the Linux operating system.
+To take a picture, we will use the built-in library `libcamera`. It is a software library aimed at supporting complex camera systems directly from the Linux operating system.
 
-Let's check to make sure everything is working. Run
+Let's check to make sure that everything works. Run
 ``` Bash
 $ libcamera-hello
 ```
 in the terminal. You should see a camera preview window for about 5 seconds.
 
-To play around with how many seconds the preview window is shown, we can add a tag `-t <duration>` to specify the number of milliseconds. We can also show the preview indefinitely by running
+To set how many seconds the preview window will be shown, add a tag `-t <duration>` to specify the number of milliseconds. We can also show the preview indefinitely by running
 
 ``` Bash
 $ libcamera-hello -t 0
 ```
-To exit out of this preview, click the window's close button, or use `Ctrl-C` in the terminal.
+To exit the preview, click the window's close button, or use `Ctrl-C` in the terminal.
 
-Now, lets capture a photo. To accomplish this, we can use the builtin `libcamera-still` application.
+Now, let's capture a photo. To accomplish this, we will use the built-in `libcamera-still` application.
 
 To capture a full resolution JPEG images, run
 ``` Bash
@@ -72,7 +72,7 @@ The `-t <duration>` option can be used to alter the length of time the preview s
 $ libcamera-still -o test.jpg -t 2000 --width 640 --height 480
 ```
 
-`libcamera-still` allows files to be saved in a number of different formats. 
+`libcamera-still` allows files to be saved in a number of different formats:
 ``` Bash
 $ libcamera-still -e png -o test.png
 $ libcamera-still -e bmp -o test.bmp
@@ -83,19 +83,19 @@ Note that the format in which the image is saved depends on the `-e` (equivalent
 
 ## 2. Automate Picture Taking
 
-Now that we know we can use the builtin `libcamera-still` application to take images, lets wrap it up in a Bash script.
+Now, we know that we can use the built-in `libcamera-still` application to take images, let's wrap it up in a Bash script.
 
-A Bash script is just a series of shell commands written in a file. Anything you can run normally on the command line can be put into a Bash script and it will do exactly the same thing. Similarly, anything you can put into a Bash script can also be run normally on the command line and it will do exactly the same thing.
+A Bash script is a file that contains a series of shell commands. Anything you can run normally on the command line can be put into a Bash script and it do exactly the same thing. Similarly, anything you can put into a Bash script can also be run normally in the command line and do exactly the same thing.
 
-Bash scripts help us automate tasks by allowing us to run a set of terminal commands all at once.
+Bash script helps us automate tasks by allowing us to run a set of terminal commands all at once.
 
 To start, let's create a `capture.sh` file in your final project folder on the `Desktop`. This will be the Bash script where we will automate taking images. Once created, it is important to note that the first line of the script must be 
 ``` Bash
 #!/bin/bash
 ```
-in order to signify that this is in fact a Bash script. This is referred to as the `Shebang`. The hash exclamation mark `(#!)` character sequence is referred to as the Shebang. Following it is the path to the interpreter (or program) that should be used to run (or interpret) the rest of the lines in the text file. For Bash scripts it will be the path to Bash (the common interpreter of shell commands), but there are many other types of scripts and they each have their own interpreter.
+in order to signify that this is in fact a Bash script. The hash exclamation mark `(#!)` character sequence is referred to as the "Shebang". Following it is the path to the interpreter (or program) that should be used to run (or interpret) the rest of the lines in the text file. For a Bash script, it will be the path to Bash (the common interpreter of shell commands), but there are many other types of scripts and each of them has their own interpreter.
 
-In the following lines, we can run any terminal commands we want! For example: 
+In a Bash script, we can run any terminal commands we want! For example: 
 ``` Bash
 #!/bin/bash
 
@@ -106,7 +106,7 @@ sleep 1
 echo !
 ```
 
-is a script that will print 
+And this will print
 ``` Bash
 Hello
 World
@@ -130,9 +130,9 @@ Now, to execute this script, we can go back to the terminal and run
 ./capture.sh
 ```
 
-You'll notice that a new `test.jpg` file was created in your final project folder. It's the image that was just captured! Try running the command again. You'll see that `test.jpg` was replaced with a new image. Let's fix this.
+You'll notice that a new `test.jpg` file was created in your final project folder. It's the image just captured! Try running the command again. You'll see that `test.jpg` is replaced with a new image. Let's fix this.
 
-Inside `capture.sh` replace the existing line with
+Inside `capture.sh`, replacing the existing line with
 ``` bash
 libcamera-still -o $1.jpg
 ```
@@ -143,11 +143,11 @@ instead. Instead of storing the image in the file `test.jpg`, we've replaced it 
 ./capture.sh image1.jpg
 ```
 
-Now, the new image is stored in `image1.jpg`. Run it again but replace `image1.jpg` with anything (ending in `.jpg`). As you can see, our bash script reads in whatever is passed in when you run the script and uses that as the name of the file. Very cool stuff! Now you can run our `./capture.sh` script and store the image to any filename of your choosing.
+Now, the new image is stored in `image1.jpg`. Run it again but replace `image1.jpg` with anything (ending in `.jpg`). As you can see, our Bash script reads in whatever that is passed to it when you run the script and uses that as the name of the file. Very cool stuff! Now you can run our `./capture.sh` script and store the image to any filename of your choosing.
 
 ## 3. To Push Some Buttons
 
-Now you may be thinking about using your new Raspberry Pi camera on the go, or showing it off at your friend's party, but you certainly don't want to carry those heavy keyboard and monitor. How will we take pictures then?
+Now you may think about using your new Raspberry Pi camera on the go, or showing it off at your friend's party, but you certainly don't want to carry those heavy keyboard and monitor. How will we take pictures then?
 
 This is where we will take what we've learned about GPIO pins and put them to good use.
 
@@ -179,9 +179,9 @@ Now, create a Python file, let's call it `push_botton_capture.py`.
 
 Our initial script will initialize the GPIO port and then continuously read the status of the pin until we exit the program.
 
-First we import the GPIO library and then setup the library to use board numbering. We then initialize pin 10 as an input pin, and instruct the Raspberry Pi to pull the pin low using the `pull_up_down` parameters.
+First we import the GPIO library and then setup the library to use board numbering. We then initialize pin 10 as an input pin, and instruct the Raspberry Pi to pull the pin low by using the `pull_up_down` parameters.
 
-The initialization code looks as follows:
+The initialization codes are like the following:
 
 ``` Python
 import RPi.GPIO as GPIO
@@ -191,7 +191,7 @@ GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 10 to be an input 
 ```
 The `pull_up_down` parameter in the `GPIO.setup` call tells the Raspberry Pi which state the pin should be in when there is nothing connected to the pin. This is important since we want our program to read a low state when the button is not pushed and a high state when the button is pushed.
 
-With the port initialized we can write the code that continuously reads the port and outputs a message when the button is pressed. We use the GPIO.input function to read the state of the port.
+With the port being initialized, we can write the codes that continuously read the port and output a message when the button is pressed. We use the GPIO.input function to read in the state of the port.
 ```Python
 while True: # Run forever
     if GPIO.input(10) == GPIO.HIGH:
@@ -203,25 +203,25 @@ Let's open your final project folder in the terminal and try executing this Pyth
 $ Python3 push_botton_capture.py
 ```
 
-You’ll notice that when you push the button the script outputs `Button was pushed!` many times. This is because we are continuously reading the state of the button. 
+You’ll notice that when you push the button, the script outputs `Button was pushed!` many times. This is because we are continuously reading in the state of the button. 
 
-If the program does not work, or continuously outputs `Button was pushed!` without the button being pressed down, try rotating the button 90 degrees.
+If the program does not work, or continuously outputs `Button was pushed!` without the button being pressed down, try rotating the button by 90 degrees.
 
 ### c) Switching to Event-based GPIO Input
 
-We want the program to only print out `Button was pushed!` once everytime the button is pushed. After all, it is quiet strange for there to be multiple `Button was pushed!` prints when you have only pressed the button once. This is as a result of what is known as 'switch bounce'.
+We want the program to only print out `Button was pushed!` once everytime the button is pushed. After all, it is quite strange for there to be multiple `Button was pushed!` printed when you have only pressed the button once. This is a result of 'switch bounce'.
 
-We want to rewrite our program to output a single message whenever the button is pressed rather than continuously outputting a message. We can do this using GPIO events.
+We want to rewrite our program to print a single message whenever the button is pressed rather than continuously outputting a message. We can realize this by using GPIO events.
 
-A GPIO event in the Raspberry Pi Python GPIO library works by calling a Python function whenever an event is triggered. Such a function is called a callback function. A GPIO event also has built-in functionality for switch bounce handling, which will solve our problem!
+A GPIO event in the Raspberry Pi Python GPIO library works by calling a Python function whenever an event is triggered. Such a function is called a callback function. A GPIO event also has built-in functionality for "switch bounce" handling, which will solve our problem!
 
-An event can be an input pin being low or high, but it could also be when the pin changes from low to high – called rising – or when the pin changes from high to low – called falling.
+An event can be an input pin being low or high, but it could also be when the pin changes from low to high – called rising, or when the pin changes from high to low – called falling.
 
-In our case we want to detect when the button is being pressed, that is going from low to high also called the rising edge.
+In our case we want to detect whenever the button is being pressed, which is going from low to high, and is also called the rising edge.
 
-Before we setup the event we must however first write the callback function to be executed when the event is detected. The callback function is a regular Python function and as such can contain any Python code, it could send out a tweet or as we do in our case simply print `Button was pushed!`.
+Before we setup the event we must, however, first write the callback function to be executed when the event is detected. The callback function is a regular Python function and as such can contain any Python code, it could send out a tweet or, as what we did in our case, simply print `Button was pushed!`.
 
-In the top of `push_botton_capture.py`, let's add
+On the top of `push_botton_capture.py`, let's add
 ```Python
 def button_callback(channel):
     print("Button was pushed!")
@@ -234,7 +234,7 @@ GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
 GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
 ```
 
-Finally, let's define the wanted behavior for when a specific event occurs. Note the first parameter defines the channel or pin we're monitoring. The second specifies the rising or falling edge. We use `callback` parameter to register the callback function and `bouncetime` for switch bound handling.
+Finally, let's define the wanted behavior when a specific event occurs. Note the first parameter defines the channel or pin we're monitoring. The second specifies the rising or falling edge. We use `callback` parameter to register the callback function and `bounce time` for switch bound handling.
 ``` Python
 GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback,bouncetime=200) # Setup event on pin 10 rising edge, ignoring further edges for 200ms
 ```
@@ -245,7 +245,7 @@ message = input("Press enter to quit\n\n") # Run until someone presses enter
 GPIO.cleanup() # Clean up
 ```
 
-In summary, your `push_button_capture.py` should now look like the following
+In summary, your `push_button_capture.py` should now look like the following:
 ``` Python
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 def button_callback(channel):
@@ -258,30 +258,30 @@ message = input("Press enter to quit\n\n") # Run until someone presses enter
 GPIO.cleanup() # Clean up
 ```
 
-Let's try executing this file again by running the following in the terminal
+Let's try executing this file again by running the following in the terminal:
 ``` Bash
 $ python3 push_button_capture.py
 ```
-You now see that the program only outputs one `Button was pushed!` everytime the button is pushed.
+You now could see that the program only print out `Button was pushed!` only once everytime the button is pushed.
 
 ### d) What To Do When the Button is Pushed?
 
-There is now visual indication in the terminal whenever the button is pushed. Our next task is to capture an image whenever this event occurs. Can you think of how this can be accomplished?
+There is now visual indication in the terminal whenever the button is pushed. Our next task is to capture an image whenever the event occurs. Can you think of how this can be accomplished?
 
-We already have a callback function, `button_callback`, that is called whenever the button is pushed. Don't believe me? Change the print statement inside `button_callback` to anything you want and run the program again. You'll see that whenever the button is pushed, your new print statement is outputed in the terminal!
+We've already had a callback function, `button_callback`, which is called whenever the button is pushed. Not believe? Change the print statement inside `button_callback` to anything you want and run the program again. You'll see that whenever the button is pushed, your new print statement is printed in the terminal!
 
 So, we will need to add something inside of this callback function in order to accomplish our mission.
 
-We already wrote a Bash script that takes a photo. Let's use that! When we wanted to take a photo, we would simply run the Bash script in the terminal. We need a way to run the same script in our Python program.
+We've already wrote a Bash script that takes a photo. Let's use that! When we wanted to take a photo, we can simply run the Bash script in the terminal. We need a way to run the same script in our Python program.
 
-This is where the Python `os` module comes into place. This module provides a portable way of using operating system dependent functionality. Some popular functions includes creating and deleting directories/files, and of course, executing other programs.
+This is where the Python `os` module comes into place. This module provides a portable way of using operating system dependent functionality. Some popular functions include creating and deleting directories/files, and of course, executing other programs.
 
 To do this, we will first need to import the module in our Python file
 ``` Python 
 import os
 ```
 
-In order to run a terminal command in Python, we will use the funciton `os.system`. Meaning we can add the following line in `button_callback`
+In order to run a terminal command in Python, we will use the funciton `os.system`, meaning that we can add the following line in `button_callback`:
 ``` Python
 os.system("./capture.sh test_capture.jpg")
 ```
@@ -290,21 +290,21 @@ Try running the Python program again. As you can see, whenever you press the but
 
 ### e) Unique Files for Each Image
 
-We can try naming the images something unique. Let's try using the timestamp for this purpose! 
+We can try naming the images with something unique. Let's try using the timestamp for this purpose! 
 
 To do this, let's import the `datetime` package in Python.
 ``` Python
 import datetime
 ```
 
-To get the time, we can use the builtin function `datetime.datetime.now` to get the current time. We will then format the timestamp into something humans can easily read and understand. To do this, we will use `strftime` to format the `datetime` object.
+To get the current time, we can use the built-in function `datetime.datetime.now`. We will then format the timestamp into something human-readable. To do this, we will use `strftime` to format the `datetime` object.
 
 ``` Python
 current_time = datetime.datetime.now()
 time_formatted = current_time.strftime("%m_%d_%Y--%H_%M_%S")
 ```
 
-Can you find a way to use the timestamp in your existing code?
+Can you find a way to use the timestamp in your existing codes?
 
 We can replace the `os.system` call with the following.
 
@@ -340,9 +340,9 @@ message = input("Press enter to quit\n\n") # Run until someone presses enter
 GPIO.cleanup() # Clean up
 ```
 
-Try running it in the terminal
+Try running this in the terminal:
 ``` bash
 $ python3 push_button_capture.py
 ```
 
-See that a new `.jpg` file is created everytime you push the button and that each file is an image captured from the camera module.
+We now can see that a new `.jpg` file is created everytime you push the button. And each of the files is an image captured by the camera module.
