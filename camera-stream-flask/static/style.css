@@ -23,8 +23,6 @@ body {
     font-size: 17px;
 }
 
-.navbar a:hover {}
-
 .navbar a.active {
     background-color: #4CAF50;
     color: white;
@@ -78,7 +76,7 @@ button {
     top: 0;
     left: 0;
 
-    /* Preserve aspet ratio */
+    /* Preserve aspect ratio */
     min-width: 100%;
     min-height: 100%;
 
