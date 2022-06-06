@@ -39,8 +39,8 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-def transcribe_audio(audio_file):
-    with sr.AudioFile(audio_file) as source:
+def transcribe_audio(audio):
+    with sr.AudioFile(audio) as source:
         audio = recognizer.record(source)
     try:
         return recognizer.recognize_google(audio)
@@ -54,8 +54,7 @@ def transcribe_audio(audio_file):
 def upload_audio():
     if request.method == 'POST':
         f = request.files['audio_data']
-        f.save(f.filename)
-        return transcribe_audio(f.filename)
+        return transcribe_audio(f)
 
 
 if __name__ == '__main__':
