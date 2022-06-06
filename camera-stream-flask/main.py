@@ -29,14 +29,9 @@ def get_camera_frame(camera):
                b'Content-Type: image/jpeg\r\n\r\n' + image.tobytes() + b'\r\n\r\n')
 
 def get_live_transcription():
-    cmd = "spchcat"
-    popen = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+    popen = subprocess.Popen("spchcat", stdout=subprocess.PIPE)
     for stdout_line in iter(popen.stdout.readline, b""):
-        yield stdout_line
-    popen.stdout.close()
-    return_code = popen.wait()
-    if return_code:
-        raise subprocess.CalledProcessError(return_code, cmd)
+        yield stdout_line.decode()
 
 @app.route('/video_feed')
 def video_feed():
