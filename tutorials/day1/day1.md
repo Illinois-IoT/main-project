@@ -6,18 +6,18 @@ A Raspberry Pi is a simple, mini computer. It is a "single-board computer" becau
 
 ![parts of a Raspberry Pi](pi_parts.png "parts of a Raspberry Pi")
 
-Exmaples of input devices are the standard keyboard and mouse, or external sensors like camera or microphone. Output devices are anything coming from the computer in a human-perceptible form. This can include a monitor (which visualizes the state of the computer), or a speaker (which provides auditory feedback).
+Exmaples of input devices are the standard keyboard and mouse, or external sensors like camera or microphone. Output devices are the ones transformming anything coming from the computer into a human-perceptible form. This can include a monitor (which visualizes the state of the computer), or a speaker (which provides auditory feedback).
 
 ### GPIO
 
-GPIO stands for "general-purpose input/output". These are the two rows of pins along the side of the Raspberry Pi.
+GPIO stands for "general-purpose input/output". This consists of two rows of pins along the side of the Raspberry Pi.
 
 ![GPIO pinout](gpio_pinout.png "GPIO pinout")
 
-Each pin has different different uses:
+Each pin has different uses:
 
 #### Standard GPIO Pins
-These pins can be used for sending and receiving any input/output. Each pin has only 2 voltage states: high or low. Think of this as 1 or 0, or on or off. You can send a on or off signal to the connected peripheral device. The device can also communicate back by sending the same signal or a series of signals.
+These pins can be used for sending and receiving any input/output. Each pin has only 2 voltage states: high or low. Think of this as "1 or 0", or "on or off". You can send an "on or off" signal to the connected peripheral device. The device can also communicate back by sending the same signal or a series of signals.
 
 #### Power Pins
 These pins transmit power as output to power attached peripherals. There are several 3.3V and 5V output pins, depending on what the external device requires.
@@ -28,18 +28,18 @@ And if we’re going to be rigging up electrical circuits here with power, then 
 #### Communication Pins
 Some of the standard GPIO pins are used for communication purposes. Here are some common communication protocols.
 
-* SPI pins – The Serial Peripheral Interface (SPI) is a communication protocol used to transfer data between micro-computers like the Raspberry Pi and peripheral devices. The MISO pin receives data, and the MOSI pin sends data from the Raspberry Pi. Furthermore, the serial clock pin sends pulses at a regular frequency between the Raspberry Pi and the SPI device at the same speed in which the devices to transfer data to each other.
-* UART pins – UART stands for universal asynchronous receiver-transmitter, which is a physical circuit designed to send and recieve data.
-* PWM pins – PWM means “pulse width modulation,” which is a communication protocol best used with stuff that moves and lights up: motors, LEDs, and so on.
-* I2C pins – I2C is short for inter-integrated circuit (two “inters” or I"squared"C). It works similarly to SPI, but it doesn’t force you to use nearly so many pins.
+* SPI pins – The Serial Peripheral Interface (SPI) is a communication protocol used to transfer data between micro-computers like the Raspberry Pi and peripheral devices. The MISO pin receives data, and the MOSI pin sends data from the Raspberry Pi. Furthermore, the serial clock pin sends pulses at a regular frequency between the Raspberry Pi and the SPI device at the same speed, in which the devices transfer data to each other.
+* UART pins – UART stands for "universal asynchronous receiver-transmitter", which is a physical circuit designed to send and recieve data.
+* PWM pins – PWM stands for “pulse width modulation,” which is a communication protocol best used with stuff that moves and lights up: motors, LEDs, etc.
+* I2C pins – I2C is stands for "inter-integrated circuit" (two “inters” or I"squared"C). It works similarly to SPI, but it doesn’t force you to use nearly so many pins.
 
 ## Introduction to the Project
 
 Over the course of the next few days, you will complete a project that replicates a smart doorbell system.
 
-Imaging you want to create a doorbell alarm system where the visitor doesn't have to press a button for you to be notified. The doorbell system will know when a person approaches the door and alert you.
+Imagine you want to create a doorbell alarm system in which the visitor doesn't have to press a button for you to be notified. The doorbell system will know when a person approaches the door and alert you.
 
-We will achieve this in several parts. Today, you will begin by learning about how to interface with the camera module using a Python script.
+We will achieve this through several parts. Today, you will begin by learning about how to interface with the camera module using a Python script.
 
 ## 1. Take a picture
 
