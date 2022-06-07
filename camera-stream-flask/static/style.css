@@ -1,3 +1,8 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .navbar {
     overflow: hidden;
     position: fixed;
@@ -6,12 +11,17 @@
     margin: auto;
     background-color: black;
     opacity: 0.6;
+    color: white;
+}
+
+.navbar i {
+    color: white;
+    background: red;
 }
 
 .navbar a {
     float: left;
-    display: block;
-    color: #f2f2f2;
+    display: inline;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -20,7 +30,6 @@
 
 .navbar a.active {
     background-color: #4CAF50;
-    color: white;
 }
 
 .main {
@@ -46,8 +55,6 @@ i.fa {
     border-radius: 60px;
     box-shadow: 0px 0px 2px #888;
     padding: 0.5em 0.6em;
-
-
 }
 
 img {
@@ -71,7 +78,7 @@ button {
     top: 0;
     left: 0;
 
-    /* Preserve aspet ratio */
+    /* Preserve aspect ratio */
     min-width: 100%;
     min-height: 100%;
 
@@ -102,5 +109,4 @@ body {
     height: 100vh;
     overflow: hidden;
     background-color: black;
-    font-family: Arial, Helvetica, sans-serif;
 }
