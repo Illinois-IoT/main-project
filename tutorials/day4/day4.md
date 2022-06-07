@@ -74,7 +74,7 @@ The only thing is note is the `Content-Type`. The server can respond with a myri
 
 ### e) All About Flask
 
-Now that we know about how web servers work, lets discuss how we can create one ourselves using Python.
+Now that we know about how web servers work, let's discuss how we can create one ourselves using Python.
 
 Flask is a web framework in Python. This means flask provides you with tools, libraries and technologies that allow you to build a web application. This web application can be some web pages, a blog, a wiki or go as big as a web-based calendar application or a commercial website.
 
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     app.run()
 ```
 
-Perfect. Now you have a flask app! But as you probably already guessed, our app doesn't do anything. We need to create accessible routes.
+Perfect. Now you have a flask app! But as you've probably already guessed, our app doesn't do anything. We need to create accessible routes.
 
 ``` Python
 @app.route('/')
@@ -130,7 +130,7 @@ Similarly, if you defined the route `/hello` for a method called `hello_func`, t
 
 Now, let's create a simple `index.html` that displays `"Hello World"`. Inside of `templates/`, create a new file called `index.html`.
 
-Inside, lets put 
+Inside, let's put 
 ``` HTML
 <!DOCTYPE html>
 <html lang='en'>
