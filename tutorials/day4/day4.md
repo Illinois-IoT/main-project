@@ -201,7 +201,7 @@ In reality, a smart doorbell is not very smart if you don't know who is there. T
 
 By the end of today, you will be able to open your phone and see what your camera sees.
 
-Lets get started.
+Let's get started.
 
 ### a) Setting up Flask
 
@@ -317,7 +317,7 @@ Here, we loop through all of the frames in a continuous capture feed. Then, we m
 
 Finally, we want to send the frame as an image in the response. Remember that when we learned about HTTP requests and responses, the response can be on various types. To send an image response back to the end, we will define the `Content-Type` to be `image/jpeg`.
 
-Now that we have a helper function that returns each frame, lets go back to `video_feed()`. Here, we want to have flask help us respond to the request. Flask has a `Response()` method for this reason. Without having to worry too much about what this builtin function does, we will use it in `video_feed` to return a constant stream of image frames to the client.
+Now that we have a helper function that returns each frame, let's go back to `video_feed()`. Here, we want to have flask help us respond to the request. Flask has a `Response()` method for this reason. Without having to worry too much about what this built-in function does, we will use it in `video_feed` to return a constant stream of image frames to the client.
 
 The final `video_feed()` function should look like this:
 
