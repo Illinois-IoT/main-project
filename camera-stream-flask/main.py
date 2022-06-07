@@ -12,6 +12,9 @@ camera.resolution = (640, 480)
 raw_capture = PiRGBArray(camera, size=(640, 480))
 
 recognizer = sr.Recognizer()
+mic = sr.Microphone()
+with mic as source:
+    recognizer.adjust_for_ambient_noise(source)  # we only need to calibrate once, before we start listening
 
 # App Globals (do not edit)
 app = Flask(__name__)
@@ -39,9 +42,10 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-def transcribe_audio(audio):
-    with sr.AudioFile(audio) as source:
-        audio = recognizer.record(source)
+@app.route('/listen')
+def transcribe_audio():
+    with mic as source:
+        audio = recognizer.listen(source)
     try:
         return recognizer.recognize_google(audio)
     except sr.UnknownValueError:
@@ -50,12 +54,5 @@ def transcribe_audio(audio):
         return "Could not request results from Google Speech Recognition service; {0}".format(e)
 
 
-@app.route('/upload', methods=['POST'])
-def upload_audio():
-    if request.method == 'POST':
-        f = request.files['audio_data']
-        return transcribe_audio(f)
-
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False, ssl_context="adhoc")
+    app.run(host='0.0.0.0', debug=False)
