@@ -202,7 +202,7 @@ delta = |reference_frame – current_frame|
 
 Now, we can use `cv2.threshold` to reveal regions of the image that only have significant changes in pixel intensity values. If the delta is less than 25, we discard the pixel and set it to black (i.e. background). If the delta is greater than 25, we’ll set it to white (i.e. foreground).
 
-It will look something like this
+It will look something like this:
 ![](day3_frame_delta_thresholded.jpg)
 
 Given this thresholded image, it’s simple to apply contour detection to to find the outlines of these white regions.
