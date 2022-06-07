@@ -4,9 +4,9 @@
 
 ### a) What is a Web Server?
 
-In a nutshell, a web server is both the hardware and software required to create a website that you can access via the internet.
+In a nutshell, a web server is both the hardware and software required to create a website that you can access via the Internet.
 
-For example, if you go to `amazon.com`, a request is made from your computer to a server owned by Amazon. The returned result is what you see on your screen. If you want to access any piece of data/information through the internet, that data/information must be stored somewhere and there must be some sort of software to help you access it.
+For example, if you go to `amazon.com`, a request is made from your computer to a server owned by Amazon. The returned result is what you see on your screen. If you want to access any piece of data/information through the Internet, that data/information must be stored somewhere and there must be some sort of software to help you access it.
 
 On the hardware side, a web server is a computer that stores web server software and a website's component files (for example, HTML documents, images, CSS stylesheets, and JavaScript files). A web server connects to the internet and supports physical data interchange with other devices connected to the web.
 
@@ -34,7 +34,7 @@ What are some examples of requests made from a browser to a web server?
 
 Now that we know how our browser can receive data from any web server, how do we contribute to the web? 
 
-Everyday, over 95 million photos and videos are shared on Instagram. There's also 720,000 hours of video being uplaoded to YouTube on the daily. Lets look at the technical mechanics of how these pieces of media is posted onto the internet for everyone to see.
+Everyday, over 95 million photos and videos are shared on Instagram. There's also 720,000 hours of video being uplaoded to YouTube on the daily. Let's look at the technical mechanics of how these pieces of media is posted onto the internet for everyone to see.
 
 Above, we discussed how your browser loads data. They do it by `GET`ting data from a web server. Now, when you want to post a new Instagram post, your browser will need to `POST` to the web server. What about when you want to edit a caption? Well, that's a `PUT` request. And when you decide that your post is no longer relavent, you can `DELETE` from the web server.
 
