@@ -8,9 +8,9 @@ Today, we will take another step in our overall goal of creating a smart securit
 
 How do we achieve this?
 
-Well, first we need a way to stream the camera feed. In the past, we were successful in capturing still images from the camera, and even showed a preview of the feed for a few seconds. But we need a way to access the camera feed in a Python script.
+Well, first we need a way to stream the camera feed. In the past, we successfully captured still images from the camera, and even showed a preview of the feed for a few seconds. But now, we need a way to access the camera feed in a Python script.
 
-We would then need to figure out a way to detect any motion in the stream. We'll get back to this later, but for now, think of some ideas in how we can detect motion. Think about what exactly is "motion" in terms of a stream of images. After all, a video is just a set of still images that you view in rapid succession.
+We would then need to figure out a way to detect any motion in the stream. We'll get back to this later, but for now, think of some ideas about how we can detect motion. Think about what exactly the "motion" is in terms of a stream of images. After all, a video is just a set of still images that you view in a rapid succession.
 
 ## 1. Steady Camera Stream
 
@@ -42,7 +42,7 @@ raw_capture = PiRGBArray(camera, size=(640, 480))
 time.sleep(1) # allow time for the camera to warmup
 ```
 
-Next, we will capture a frame by calling `capture()` on the camera object we previously created. Be aware that the format is `BGR` and not the traditional `RGB`. This is extremely important because `OpenCV` represents images as `Numpy` arrays in `BGR` order rather than `RGB`. This little nuance is subtle, but very important to remember as it can lead to some confusing bugs in your code down the line.
+Next, we will capture a frame by calling `capture()` on the camera object we previously created. Being aware that the format is `BGR` and not the traditional `RGB`. This is extremely important because `OpenCV` represents images as `Numpy` arrays in `BGR` order rather than `RGB`. This little nuance is subtle, but very important to remember as it can lead to some confusing bugs in your code down the line.
 
 
 ``` Python
@@ -66,7 +66,7 @@ $ python3 motion_detection.py
 
 Now that we have successfully used `OpenCV` to grab a single image from the camera, let’s move on to a video stream.
 
-The concept is similar to how we got a single image above. But instead of calling `capture` on the camera object, we will call `capture_continuous` instead. Intuitive right?
+The concept is similar to how we got a single image above. But instead of calling `capture` on the camera object, we will call `capture_continuous` instead. Intuitively right?
 
 But in order to process each individual frame in this continuous stream, we will need a for loop:
 
@@ -83,7 +83,7 @@ raw_capture.truncate()
 raw_capture.seek(0)
 ```
 
-Finally, let’s wait for an escape key to be pressed in order to exit out of the infinite loop.
+Finally, let’s wait for an "escape" key to be pressed in order to exit out of the infinite loop.
 
 ```Python
 key = cv2.waitKey(1) # get the key pressed in the last millisecond
@@ -141,17 +141,17 @@ Today, we will explore what it means to use background subtration between frames
 
 ### What is Background Subtraction
 
-Background subtraction is critical in many computer vision applications. We use it to count the number of cars passing through a toll booth. We use it to count the number of people walking in and out of a store.
+Background subtraction is critical in many Computer Vision applications. We use it to count the number of cars passing through a toll booth. We use it to count the number of people walking in and out of a store.
 
 And we will now use it for motion detection.
 
 The base in this approach is that of detecting moving objects from the difference between the current frame and reference frame, which is often called ‘Background Image’ or ‘Background Model’. This background subtraction is typically done by detecting the foreground objects in a video frame and foreground detection is the main task of this whole approach.  
 
-Any robust background subtraction model should be able to handle light intensity changes, repeated motion from long term scene changes. The analysis of such an approach mathematically can be modelled using a function `P(x,y,t)` as a video sequence where `t` is the time dimensions `x` and `y` are the pixel locations. 
+Any robust background subtraction model should be able to handle light intensity changes and repeated motion from long term scene changes. The analysis of such an approach mathematically can be modelled using a function `P(x,y,t)` as a video sequence where `t` is the time dimensions `x` and `y` are the pixel locations. 
 
 ![](day3_background_subtraction.png)
 
-Mathematically it can be modelled as;
+Mathematically it can be modelled as:
 
 ```
 |reference_frame – current_frame| > Threshold
@@ -159,11 +159,11 @@ Mathematically it can be modelled as;
 
 This approach can be used when segment motion-based objects such as cars, pedestrians etc. 
 
-And it is very sensitive to threshold values. So depending on object structure, speed, frame rate and global threshold limit this approach has limited use cases.
+And it is very sensitive to threshold values. So depending on object structure, speed, frame rate and global threshold limit, this approach has limited use cases.
 
 ![](day3_threshold.png)
 
-We will use background subtraction to detection motion because the background of our video stream is largely static and unchanging over consecutive frames of a video. Therefore, if we can model the background, we monitor it for substantial changes. If there is a substantial change, we can detect it — this change normally corresponds to motion on our video.
+We will use background subtraction to detect motion because the background of our video stream is largely static and unchanging over consecutive frames of a video. Therefore, if we can model the background, we monitor it for substantial changes. If there is a substantial change, we can detect it — this change normally corresponds to motion on our video.
 
 ### Implement Background Subtraction
 
