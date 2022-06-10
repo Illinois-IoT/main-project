@@ -244,9 +244,6 @@ Then, create `index.html` inside of `templates/` with the following code:
 <head>
   <meta charset="utf-8" />
   <title>Hello world!</title>
-  <link type="text/css" rel="stylesheet"
-        href="{{ url_for('static',
-              filename='hello.css')}}" />
 </head>
 <body>
 </body>
@@ -303,7 +300,6 @@ Now, lets create a helper function to get the frame. This is also exactly what w
 
 ``` Python
 def get_camera_frames(camera):
-    # get camera frames
     for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
         image = frame.array
         _, image = cv2.imencode(".jpg", image)
