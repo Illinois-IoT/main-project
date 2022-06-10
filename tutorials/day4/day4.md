@@ -302,8 +302,8 @@ raw_capture = PiRGBArray(camera, size=(640, 480))
 Now, lets create a helper function to get the frame. This is also exactly what we have done before.
 
 ``` Python
-def get_feed(camera):
-    #get camera frames
+def get_camera_frames(camera):
+    # get camera frames
     for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
         image = frame.array
         _, image = cv2.imencode(".jpg", image)
@@ -324,11 +324,12 @@ The final `video_feed()` function should look like this:
 ``` Python 
 @app.route('/video_feed')
 def video_feed():
-    return Response(get_feed(camera),
+    return Response(get_camera_frames(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 ```
 
 And that's it! You have just created a web app using Flask that streams the feed of the camera attached to your Raspberry Pi. To execute this, go to the terminal and run
+
 ``` bash
 $ python main.py
 ```
