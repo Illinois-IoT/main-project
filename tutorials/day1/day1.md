@@ -201,7 +201,7 @@ while True: # Run forever
 
 Let's open your final project folder in the terminal and try executing this Python program by running the following:
 ```Bash
-$ Python3 push_botton_capture.py
+$ python3 push_botton_capture.py
 ```
 
 You’ll notice that when you push the button, the script outputs `Button was pushed!` many times. This is because we are continuously reading in the state of the button. 
