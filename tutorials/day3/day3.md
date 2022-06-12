@@ -136,7 +136,7 @@ Now, let's revisit our initial question. How do we detect motion within a camera
 
 ![](day3_frames.jpeg)
 
-What exactly is "motion" anyways? In the example above, we see that there are minor differences between each frame. If you mut all of these minor differences together, you get "motion".
+What exactly is "motion" anyways? In the example above, we see that there are minor differences between each frame. If you put all of these minor differences together, you get "motion".
 
 ![](day3_frames_animated.gif)
 
