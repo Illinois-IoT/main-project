@@ -307,10 +307,10 @@ time_formatted = current_time.strftime("%m_%d_%Y--%H_%M_%S")
 
 Can you find a way to use the timestamp in your existing codes?
 
-We can replace the `os.system` call with the following.
+We can replace the `os.system` call with the following. (Be aware there is a space " " after "./capture.sh"!)
 
 ``` Python
-os.system("./capture.sh " + time_formatted + ".jpg")
+os.system("./capture.sh " + time_formatted)
 ```
 
 This line uses string concatenation, which basically just adds different strings together to form a longer string. For example, if the `time_formatted` was `6_20_2022--10_03_02`, then Python would interpret the above line as 
