@@ -113,6 +113,7 @@ World
 !
 ```
 into the terminal with 1 second between each print out statement.
+(If encounter permission denied, run "ls -la" to check priviledge and use "chmod u+x capture.sh" to give priviledge.)
 
 For our purpose, we will create a script called `capture.sh` with the following:
 ``` Bash
