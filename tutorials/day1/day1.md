@@ -269,7 +269,7 @@ You now could see that the program only print out `Button was pushed!` only once
 
 There is now visual indication in the terminal whenever the button is pushed. Our next task is to capture an image whenever the event occurs. Can you think of how this can be accomplished?
 
-We've already had a callback function, `button_callback`, which is called whenever the button is pushed. Not believe? Change the print statement inside `button_callback` to anything you want and run the program again. You'll see that whenever the button is pushed, your new print statement is printed in the terminal!
+We've already had a callback function, `button_callback`, which is called whenever the button is pushed. Hard to believe? Change the print statement inside `button_callback` to anything you want and run the program again. You'll see that whenever the button is pushed, your new print statement is printed in the terminal!
 
 So, we will need to add something inside of this callback function in order to accomplish our mission.
 
@@ -287,7 +287,7 @@ In order to run a terminal command in Python, we will use the funciton `os.syste
 os.system("./capture.sh test_capture.jpg")
 ```
 
-Try running the Python program again. As you can see, whenever you press the button, `test_capture.jpg` is created with the photo. But we still face the same issue as before... If you press the button again, the photo is replaced with a new photo. What if we wanted to save all of the photos everytimg we press the button instead of just the most recent?
+Try running the Python program again. As you can see, whenever you press the button, `test_capture.jpg` is created with the photo. But we still face the same issue as before... If you press the button again, the photo is replaced with a new photo. What if we wanted to save all of the photos everytime we press the button instead of just the most recent?
 
 ### e) Unique Files for Each Image
 
