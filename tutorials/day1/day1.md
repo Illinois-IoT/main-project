@@ -106,7 +106,7 @@ sleep 1
 echo !
 ```
 
-And this will print
+And this will print (run ./capture.sh in terminal)
 ``` Bash
 Hello
 World
