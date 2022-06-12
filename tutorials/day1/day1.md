@@ -307,7 +307,7 @@ time_formatted = current_time.strftime("%m_%d_%Y--%H_%M_%S")
 
 Can you find a way to use the timestamp in your existing codes?
 
-We can replace the `os.system` call with the following. (Be aware there is a space " " after "./capture.sh"!)
+We can replace the `os.system` call with the following. (Be aware there is a space " " after "./capture.sh" !)
 
 ``` Python
 os.system("./capture.sh " + time_formatted)
