@@ -215,7 +215,7 @@ camera_streamer/
 |-- templates
 ```
 
-Now, lets create the server file. Inside the `camera_streamer/` folder, create a new file called `main.py`.
+Now, let's create the server file. Inside the `camera_streamer/` folder, create a new file called `main.py`.
 
 Inside, we will use the following starter code:
 
@@ -249,7 +249,7 @@ Then, create `index.html` inside of `templates/` with the following code:
 
 ### b) Creating the UI
 
-Next, lets create the main web page with a placeholder for the video feed.
+Next, let's create the main web page with a placeholder for the video feed.
 
 Navigate to `index.html`.
 
@@ -257,15 +257,15 @@ Inside the `<body></body>` tags, add the following:
 
 ``` HTML
 <div class="main" id="newpost">
-    <img class="camera-bg" style="width: 100%; height:100%; background-attachment: fixed;" src="{{ url_for('video_feed') }}">
+    <img class="camera-bg" src="{{ url_for('video_feed') }}">
 </div>
 ```
 
 Here, we are creating a `div`. In HTML, `div`s are divisions or sections, and is mainly used to create containers for other elements.
 
-Inside this division, we are creating an `img` (image) element. We initialize this element with several visual (or `style`) attributes. First, we say that the `width` and `height` should be `100%` of its parent container. Then, the `background-attachment` should have a fixed position (no need to worry about what this means). We need to specify a `src` (or source) for this image. The `src` is how the browser knows where to look for the image before its able to display it.
+Inside this division, we are creating an `img` (image) element. We need to specify a `src` (or source) for this image. The `src` is how the browser knows where to look for the image before its able to display it.
 
-Here, the source of the image we want to display is dynamically set. In flask, we can use `url_for` to specify a route that will supply the image. Here, that route is `/video_feed`.
+The source of the image we want to display is dynamically set. In flask, we can use `url_for` to specify a route that will supply the image. Here, that route is `/video_feed`.
 
 ### c) A New Route
 

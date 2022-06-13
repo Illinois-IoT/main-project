@@ -32,20 +32,12 @@ button {
 }
 
 .camera-bg {
+    background-color: dimgray;
     position: fixed;
     top: 0;
     left: 0;
 
-    /* Preserve aspect ratio */
-    min-width: 100%;
-    min-height: 100%;
-
-    /* Full height */
     height: 100%;
-    width: auto;
-
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    width: 100%;
+    object-fit: contain;
 }
