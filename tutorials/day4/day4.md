@@ -137,9 +137,6 @@ Inside, let's put
 <head>
   <meta charset="utf-8" />
   <title>Hello world!</title>
-  <link type="text/css" rel="stylesheet"
-        href="{{ url_for('static',
-              filename='hello.css')}}" />
 </head>
 <body>
 
@@ -152,7 +149,7 @@ It works!
 Now we can run our web app! 
 
 ``` bash
-$ python hello_flask.py
+$ python3 main.py
 ```
 
 Now in your browser, navigate to `http://127.0.0.1:5000/` and you should see the following
@@ -260,8 +257,7 @@ Inside the `<body></body>` tags, add the following:
 
 ``` HTML
 <div class="main" id="newpost">
-    <img class="camera-bg" style="width: 100%; height:100%; background-attachment: fixed;" id="bg" class="center"
-      src="{{ url_for('video_feed') }}">
+    <img class="camera-bg" style="width: 100%; height:100%; background-attachment: fixed;" src="{{ url_for('video_feed') }}">
 </div>
 ```
 
@@ -302,9 +298,9 @@ Now, lets create a helper function to get the frame. This is also exactly what w
 def get_camera_frames(camera):
     for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
         image = frame.array
-        _, image = cv2.imencode(".jpg", image)
         raw_capture.truncate()
         raw_capture.seek(0)
+        _, image = cv2.imencode(".jpg", image)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + image.tobytes() + b'\r\n\r\n')
 ```
@@ -327,7 +323,7 @@ def video_feed():
 And that's it! You have just created a web app using Flask that streams the feed of the camera attached to your Raspberry Pi. To execute this, go to the terminal and run
 
 ``` bash
-$ python main.py
+$ python3 main.py
 ```
 
 Now, if you visit `http://127.0.0.1:5000` on your Raspberry Pi, you should see a real-time stream of your camera! 

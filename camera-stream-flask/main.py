@@ -4,7 +4,7 @@
 from flask import Flask, render_template, Response, request
 from picamera.array import PiRGBArray
 from picamera import PiCamera
-import time, datetime
+import datetime
 import imutils
 import cv2
 import speech_recognition as sr
@@ -27,8 +27,7 @@ def index():
     return render_template('index.html')
 
 
-def get_feed(camera):
-    # get camera frames
+def get_camera_frames(camera):
     reference_frame = None
     min_area = 15
     for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
@@ -72,7 +71,7 @@ def get_feed(camera):
 
 @app.route('/video_feed')
 def video_feed():
-    return Response(get_feed(camera),
+    return Response(get_camera_frames(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 

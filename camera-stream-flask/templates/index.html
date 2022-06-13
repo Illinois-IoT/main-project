@@ -2,30 +2,26 @@
 <html>
 
 <head>
-  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <title>Hello world!</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-
-<title>Make - PiStream</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <body>
 
   <div class="main" id="newpost">
-    <img class="camera-bg" style="width: 100%; height:80%; background-attachment: fixed;" id="bg" class="center"
-      src="{{ url_for('video_feed') }}">
+    <img class="camera-bg" src="{{ url_for('video_feed') }}">
   </div>
 
   <div class="navbar">
 
     <button id="recordButton">
-      <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
+      <i class="fa fa-microphone fa-2x"></i>
     </button>
 
     <button id="listeningButton">
-      <i class="fa fa-circle fa-2x" aria-hidden="true"></i>
+      <i class="fa fa-circle fa-2x"></i>
     </button>
 
     <span id="subtitle"></span>
@@ -33,7 +29,6 @@
   </div>
 
   <script src="{{ url_for('static', filename='recordAudio.js') }}"></script>
-
 
 </body>
 

@@ -23,7 +23,7 @@ function processResult(e) {
 function startListening() {
     console.log("recordButton clicked");
 
-    //hide the stop button, show the record too allow for new recordings
+    //hide the stop button, show the record to allow for new recordings
     recordButton.style.display = "none";
     listeningButton.style.display = "inline";
 
