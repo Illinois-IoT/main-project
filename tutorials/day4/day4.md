@@ -104,6 +104,7 @@ Inside of `main.py`, we will first need to import flask. Then, we create the app
 
 ``` Python
 import flask
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -112,7 +113,7 @@ if __name__ == '__main__':
     app.run()
 ```
 
-Perfect. Now you have a flask app! But as you've probably already guessed, our app doesn't do anything. We need to create accessible routes.
+Perfect. Now you have a flask app! But as you've probably already guessed, our app doesn't do anything. We need to create accessible routes. Put this code before the if statement.
 
 ``` Python
 @app.route('/')
