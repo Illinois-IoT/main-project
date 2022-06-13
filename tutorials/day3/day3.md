@@ -207,6 +207,12 @@ Let's compute the absolute difference between the current frame and the referenc
 frame_delta = cv2.absdiff(reference_frame,current_frame)
 thresh = cv2.threshold(frame_delta, 25, 255, cv2.THRESH_BINARY)[1]
 ```
+
+Dilation fills holes and connects areas; it makes small differences a bit clearer by increasing the size and brightness. Thus, we can unite the little boxes together to form bigger detecting bounding boxes.
+```Python
+thresh = cv2.dilate(thresh,None,iterations=2)
+```
+
 This will take the pixel density difference between the current and reference frames using the following formula:
 ```
 delta = |reference_frame – current_frame|
