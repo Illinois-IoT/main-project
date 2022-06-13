@@ -217,7 +217,7 @@ Now, we can use `cv2.threshold` to reveal regions of the image that only have si
 It will look something like this:
 ![](day3_frame_delta_thresholded.jpg)
 
-Given this thresholded image, it’s simple to apply contour detection to to find the outlines of these white regions.
+Given this thresholded image, it’s simple to apply contour detection to to find the outlines of these white regions. Don't forget to import imutils!
 
 ``` Python
 cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -250,7 +250,7 @@ To review, here is what we accomplished:
 
 To wrap up, let's visualize everything we have computed above using `cv2.imshow`.
 
-First, let's show whether motion was or was not detected, along with the date.
+First, let's show whether motion was or was not detected, along with the date. Don't forget to import datetime!
 ``` Python
 cv2.putText(image, "Motion: {}".format(maybe_motion_text), (10,20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255),2)
 cv2.putText(image, datetime.datetime.now().strftime("%A %d %B %Y %I: %M: %S%p"), (10,image.shape[0]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.35,(0,0,255),1)
