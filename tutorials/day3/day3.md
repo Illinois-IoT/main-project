@@ -286,7 +286,7 @@ for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port
         break
 
     current_frame = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-    current_frame = cv2.GaussianBlur(gray,(21,21),0)
+    current_frame = cv2.GaussianBlur(current_frame,(21,21),0)
 
     if reference_frame is None:
         reference_frame = current_frame
