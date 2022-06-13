@@ -34,7 +34,7 @@ What are some examples of requests made from a browser to a web server?
 
 Now that we know how our browser can receive data from any web server, how do we contribute to the web? 
 
-Everyday, over 95 million photos and videos are shared on Instagram. There's also 720,000 hours of video being uplaoded to YouTube on the daily. Let's look at the technical mechanics of how these pieces of media is posted onto the internet for everyone to see.
+Everyday, over 95 million photos and videos are shared on Instagram. There's also 720,000 hours of video being uplaoded to YouTube on the daily bases. Let's look at the technical mechanics of how these pieces of media is posted onto the internet for everyone to see.
 
 Above, we discussed how your browser loads data. They do it by `GET`ting data from a web server. Now, when you want to post a new Instagram post, your browser will need to `POST` to the web server. What about when you want to edit a caption? Well, that's a `PUT` request. And when you decide that your post is no longer relavent, you can `DELETE` from the web server.
 
