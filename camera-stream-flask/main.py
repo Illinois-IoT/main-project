@@ -4,6 +4,8 @@
 from flask import Flask, render_template, Response, request
 from picamera.array import PiRGBArray
 from picamera import PiCamera
+import time, datetime
+import imutils
 import cv2
 import speech_recognition as sr
 
@@ -27,11 +29,43 @@ def index():
 
 def get_feed(camera):
     # get camera frames
+    reference_frame = None
+    min_area = 15
     for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
         image = frame.array
-        _, image = cv2.imencode(".jpg", image)
         raw_capture.truncate()
         raw_capture.seek(0)
+        
+        maybe_motion_text = "Not Detected"
+        if image is None:
+            break
+
+        current_frame = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+        current_frame = cv2.GaussianBlur(current_frame,(21,21),0)
+
+        if reference_frame is None:
+            reference_frame = current_frame
+            continue
+            
+        frame_delta = cv2.absdiff(reference_frame,current_frame)
+        thresh = cv2.threshold(frame_delta, 25,255,cv2.THRESH_BINARY)[1]
+        
+        thresh = cv2.dilate(thresh,None,iterations=2)
+        cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+                cv2.CHAIN_APPROX_SIMPLE)
+        cnts = imutils.grab_contours(cnts)
+            
+        for c in cnts:
+            if cv2.contourArea(c) < min_area:
+                continue
+            (x,y,w,h) = cv2.boundingRect(c)
+            cv2.rectangle(image,(x,y),(x+w,y+h), (0,255,0),2)
+            maybe_motion_text = "Detected"
+            
+        cv2.putText(image, "Motion: {}".format(maybe_motion_text), (10,20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255),2)
+        cv2.putText(image, datetime.datetime.now().strftime("%A %d %B %Y %I: %M: %S%p"), (10,image.shape[0]-50), cv2.FONT_HERSHEY_SIMPLEX, 0.35,(0,0,255),1)
+            
+        _, image = cv2.imencode(".jpg", image)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + image.tobytes() + b'\r\n\r\n')
 
