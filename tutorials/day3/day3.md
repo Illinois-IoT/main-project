@@ -17,9 +17,10 @@ We would then need to figure out a way to detect any motion in the stream. We'll
 First things first, let's stream the camera in Python. To do this, we will need the `picamera` module. Run the following in the terminal to download the neccessary packages:
 ```bash
 $ python3 -c "import picamera"
+# TODO install these packages on day1
 $ pip3 install opencv-contrib-python 
 $ sudo apt-get install -y libatlas-base-dev libhdf5-dev libhdf5-serial-dev libatlas-base-dev libjasper-dev  libqtgui4  libqt4-test
-$ pip install -U numpy 
+$ pip3 install -U numpy 
 ```
 ### a) Access Single Images
 
@@ -117,12 +118,12 @@ for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port
 	cv2.imshow("Frame", image)
 	# clear the stream in preparation for the next frame
 	raw_capture.truncate()
-    raw_capture.seek(0)
+    	raw_capture.seek(0)
     
-    # exit the loop when `q` is pressed
-    key = cv2.waitKey(1)
+    	# exit the loop when `q` is pressed
+    	key = cv2.waitKey(1)
 	if key == ord("q"):
-        break
+        	break
 ```
 
 To run this program, go to the terminal and execute
