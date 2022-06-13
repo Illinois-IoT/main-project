@@ -18,26 +18,20 @@
       src="{{ url_for('video_feed') }}">
   </div>
 
-  <div class="top-right-logo">
-    <a>Raspberry Pi - Camera Stream</a>
-    <ol id="recordingsList"></ol>
-  </div>
-
   <div class="navbar">
 
     <button id="recordButton">
       <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
     </button>
 
-    <button id="stopButton">
-      <i class="fa fa-stop fa-2x" aria-hidden="true"></i>
+    <button id="listeningButton">
+      <i class="fa fa-circle fa-2x" aria-hidden="true"></i>
     </button>
 
     <span id="subtitle"></span>
 
   </div>
 
-  <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
   <script src="{{ url_for('static', filename='recordAudio.js') }}"></script>
 
 
