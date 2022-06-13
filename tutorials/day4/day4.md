@@ -294,7 +294,7 @@ camera.resolution = (640, 480)
 raw_capture = PiRGBArray(camera, size=(640, 480))
 ```
 
-Now, lets create a helper function to get the frame. This is also exactly what we have done before.
+Now, lets create a helper function to get the frame. This is also exactly what we have done before. Don't forget to import cv2.
 
 ``` Python
 def get_camera_frames(camera):
