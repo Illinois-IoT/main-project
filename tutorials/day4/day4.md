@@ -221,6 +221,7 @@ Now, let's create the server file. Inside the `camera_streamer/` folder, create 
 Inside, we will use the following starter code:
 
 ``` Python
+import flask
 from flask import Flask, render_template, Response
 
 app = Flask(__name__)
