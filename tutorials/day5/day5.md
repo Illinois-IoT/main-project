@@ -269,6 +269,7 @@ Our HTML’s `<head>` now looks like the following:
 #### Defining the interactions
 
 Now we have a pretty navigation bar. It’s time to define how the button and subtitle behave. 
+Create a new file called "helper.js" in your static folder.
 
 First, we get these elements in JavaScript:
 
