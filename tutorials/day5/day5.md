@@ -161,6 +161,10 @@ To use JavaScript, you enter this code on a new line, just before the closing `<
 
 This is doing the same job as the `<link>` element for CSS. It applies the JavaScript to the page, so it can have an effect on the HTML.
 
+![](html_css_js_im1.png) 
+
+![](html_css_js_im2.png)
+
 ## "Listening" to your visitors
 
 A doorbell can't be smart if the visitors can't speak to us. To fix this, we can easily implement audio live streaming using an HTML audio control just like how we streamed video. However, we like challenging ourselves and want our doorbell to be even smarter - it will recognize what they say and show us the transcript.
