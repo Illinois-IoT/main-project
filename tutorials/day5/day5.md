@@ -11,6 +11,7 @@ Before doing so, we need a bit more knowledge about web development.
 #### a) Front-end and back-end
 
 ![](front-end_VS_back-end.png)
+
 Websites usually consist of two parts: the front-end and the back-end. The front-end is the side which users experience. It is responsible for how a page looks, responds, and appears when a user opens up a website and interact with the elements on the page. HTML, CSS, and JavaScript are the building blocks of front-end development. They can be rendered, presented, and executed on every browser and ensure the browsing experience for 1 billion websites and 5 billion users.
 
 On the contrary, the back-end is the guts of the web application, containing inner logic and structures and living on the server. The back-end stores, processes, and serves program and user data to ensure that the front-end has what it needs. For our project, we were mainly working on the back-end, i.e. the logic to capture camera frames and to create video feed. In addition to Python, back-end developers use programming languages like Java, PHP, and Ruby to work with data.
