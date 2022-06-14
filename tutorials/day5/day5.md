@@ -78,7 +78,7 @@ You can also select elements of a certain class by creating a selector that star
 
 Sometimes you will see rules with a selector that lists the HTML element selector along with the class:
 
-```
+```css
 li.special {
   color: orange;
   font-weight: bold;
@@ -89,7 +89,7 @@ This syntax means "target any `li` element that has a class of special".
 
 Finally, CSS has the ability to style things based on their state. The CSS below styles unvisited links pink and visited links green.
 
-```
+```css
 a:link {
   color: pink;
 }
