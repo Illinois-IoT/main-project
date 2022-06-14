@@ -126,7 +126,7 @@ This `<link>` element tells the browser that we have a stylesheet, using the `re
 
 #### c) A little bit on JavaScript
 
-Now we’ve learned mark up content as HTML documents and use CSS to style them. However, HTML and CSS are both declarative languages specifying how to display content. They are static per se and cannot react to users’ action. So how can we handle users’ input and dynamically change the page’s content based on available data? The answer is  JavaScript, a programming language that browsers understand and that controls the interactivity on the page. 
+Now we’ve learned marking up content as HTML documents and using CSS to style them. However, HTML and CSS are both declarative languages specifying how to display content. They are static per se and cannot react to users’ action. So how can we handle users’ input and dynamically change the page’s content based on available data? The answer is  JavaScript, a programming language that browsers understand and that controls the interactivity on the page. 
 
 JavaScript is versatile yet beginner-friendly. Being a script language, it’s similar to Python to some extent. We will cover only a little bit on the language, just so you can understand the code we will use today. 
 
