@@ -34,7 +34,7 @@ What are some examples of requests made from a browser to a web server?
 
 Now that we know how our browser can receive data from any web server, how do we contribute to the web? 
 
-Everyday, over 95 million photos and videos are shared on Instagram. There's also 720,000 hours of video being uplaoded to YouTube on the daily. Let's look at the technical mechanics of how these pieces of media is posted onto the internet for everyone to see.
+Everyday, over 95 million photos and videos are shared on Instagram. There's also 720,000 hours of video being uplaoded to YouTube on the daily bases. Let's look at the technical mechanics of how these pieces of media is posted onto the internet for everyone to see.
 
 Above, we discussed how your browser loads data. They do it by `GET`ting data from a web server. Now, when you want to post a new Instagram post, your browser will need to `POST` to the web server. What about when you want to edit a caption? Well, that's a `PUT` request. And when you decide that your post is no longer relavent, you can `DELETE` from the web server.
 
@@ -104,6 +104,7 @@ Inside of `main.py`, we will first need to import flask. Then, we create the app
 
 ``` Python
 import flask
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -112,7 +113,7 @@ if __name__ == '__main__':
     app.run()
 ```
 
-Perfect. Now you have a flask app! But as you've probably already guessed, our app doesn't do anything. We need to create accessible routes.
+Perfect. Now you have a flask app! But as you've probably already guessed, our app doesn't do anything. We need to create accessible routes. Put this code before the if statement.
 
 ``` Python
 @app.route('/')
@@ -220,6 +221,7 @@ Now, let's create the server file. Inside the `camera_streamer/` folder, create 
 Inside, we will use the following starter code:
 
 ``` Python
+import flask
 from flask import Flask, render_template, Response
 
 app = Flask(__name__)
@@ -292,7 +294,7 @@ camera.resolution = (640, 480)
 raw_capture = PiRGBArray(camera, size=(640, 480))
 ```
 
-Now, lets create a helper function to get the frame. This is also exactly what we have done before.
+Now, lets create a helper function to get the frame. This is also exactly what we have done before. Don't forget to import cv2.
 
 ``` Python
 def get_camera_frames(camera):

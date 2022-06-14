@@ -173,7 +173,15 @@ We will use background subtraction to detect motion because the background of ou
 
 Let's go back to our previous `motion_detection.py` file.
 
-We will first need to augment the incoming images. Let's convert the image to grayscale as color has no bearing on motion detection other than adding noise to the data. We also apply Gaussian blurring to smooth our images.
+Instead of showing the frame or image by 'cv2.imshow("Frame", image)', we should check if image is None; as well as settting a default message of "Not Detected" to variable maybe_motion_text and later change it once we detect any motion. 
+
+``` Python
+maybe_motion_text = "Not Detected"
+if image is None:
+    break
+```
+
+Then, We will need to augment the incoming images. Let's convert the image to grayscale as color has no bearing on motion detection other than adding noise to the data. We also apply Gaussian blurring to smooth our images.
 
 ``` Python
 current_frame = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
@@ -182,7 +190,7 @@ current_frame = cv2.GaussianBlur(current_frame,(21,21),0)
 
 Due to tiny variations in the digital camera sensors, no two frames will be 100% the same — some pixels will most certainly have different intensity values. That said, we need to account for this and apply Gaussian smoothing to average pixel intensities across an 21 x 21 region. This helps smooth out high frequency noise that could throw our motion detection algorithm off.
 
-For simplicity, let’s assume that the first frame we capture will contain no motion and just background. (Make sure the assumption is satisfied when you run the program.) So, we will store the first image input as the reference frame.
+For simplicity, let’s assume that the first frame we capture will contain no motion and just background. (Make sure the assumption is satisfied when you run the program.) So, we will store the first image input as the reference frame. Don't forget to set reference_frame to None initially!
 
 ``` Python
 if reference_frame is None:
@@ -199,6 +207,12 @@ Let's compute the absolute difference between the current frame and the referenc
 frame_delta = cv2.absdiff(reference_frame,current_frame)
 thresh = cv2.threshold(frame_delta, 25, 255, cv2.THRESH_BINARY)[1]
 ```
+
+Dilation fills holes and connects areas; it makes small differences a bit clearer by increasing the size and brightness. Thus, we can unite the little boxes together to form bigger detecting bounding boxes.
+```Python
+thresh = cv2.dilate(thresh,None,iterations=2)
+```
+
 This will take the pixel density difference between the current and reference frames using the following formula:
 ```
 delta = |reference_frame – current_frame|
@@ -209,14 +223,14 @@ Now, we can use `cv2.threshold` to reveal regions of the image that only have si
 It will look something like this:
 ![](day3_frame_delta_thresholded.jpg)
 
-Given this thresholded image, it’s simple to apply contour detection to to find the outlines of these white regions.
+Given this thresholded image, it’s simple to apply contour detection to to find the outlines of these white regions. Don't forget to import imutils!
 
 ``` Python
 cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
 ```
 
-We will now loop over each of the contours, where we’ll filter the small, irrelevant contours. If the contour area is larger than a pre-determined `min_area` value, we’ll draw the bounding box surrounding the foreground and motion region.
+We will now loop over each of the contours, where we’ll filter the small, irrelevant contours. If the contour area is larger than a pre-determined `min_area` value, we’ll draw the bounding box surrounding the foreground and motion region. We will use 15 as a default value for min_area so don't forget to initialize your 'min_area' as 15.
 
 ```Python
 for c in cnts:
@@ -242,7 +256,7 @@ To review, here is what we accomplished:
 
 To wrap up, let's visualize everything we have computed above using `cv2.imshow`.
 
-First, let's show whether motion was or was not detected, along with the date.
+First, let's show whether motion was or was not detected, along with the date. Don't forget to import datetime!
 ``` Python
 cv2.putText(image, "Motion: {}".format(maybe_motion_text), (10,20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,255),2)
 cv2.putText(image, datetime.datetime.now().strftime("%A %d %B %Y %I: %M: %S%p"), (10,image.shape[0]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.35,(0,0,255),1)
