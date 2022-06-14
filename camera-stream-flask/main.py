@@ -16,7 +16,6 @@ raw_capture = PiRGBArray(camera, size=(640, 480))
 recognizer = sr.Recognizer()
 mic = sr.Microphone()
 with mic as source:
-    # we only need to calibrate once, before we start listening
     recognizer.adjust_for_ambient_noise(source)
 
 reference_frame = None

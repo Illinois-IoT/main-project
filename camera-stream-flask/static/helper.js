@@ -24,10 +24,12 @@ function startListening() {
     //set subtile to "listening..."
     subtitle.textContent = "Listening...";
 
-    //send new GET request
+    //create a new GET request
     let xhr = new XMLHttpRequest();
-    xhr.onload = processResult;
     xhr.open("GET", "listen", true);
+    //call processResult when the result is ready
+    xhr.onload = processResult;
+    //send the request
     xhr.send();
 }
 
