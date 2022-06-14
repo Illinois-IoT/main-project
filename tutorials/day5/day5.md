@@ -466,6 +466,12 @@ def detect_motion(image):
     return image
 ```
 
+Also, don't forget to define a global variable for our reference frame (put it before the App Global):
+
+```python
+reference_frame = None
+```
+
 Now the only thing we need to do is to call the `detect_motion` function right after `raw_capture.seek(0)` in `get_camera_frames()`. 
 
 For reference, the final `main.py` should look like this:
@@ -490,7 +496,7 @@ with mic as source:
 
 reference_frame = None
 
-# App Globals (do not edit)
+# App Global (do not edit)
 app = Flask(__name__)
 
 
