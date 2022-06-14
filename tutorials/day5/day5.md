@@ -436,8 +436,7 @@ Visit the webpage the same way you did yesterday. You should notice the differen
 
 Finally, let’s incorporate our code for motion detection into our back-end. After this, we will be able to see motion alerts remotely on our video feed!
 
-To do so, let’s copy the code from day3 and add a new function to `main.py`:
-But we have to add one more line this time: global reference_frame because otherwise the system would treat reference_frame as a undefined local variable.
+To do so, let’s copy the code from day3 and add a new function to `main.py`. But we have to add one more line this time: `global reference_frame`. This is just a trick to tell Python to use a global `reference_frame` variable instead of a local one.
 
 ```python
 def detect_motion(image):
@@ -473,7 +472,7 @@ def detect_motion(image):
     return image
 ```
 
-Also, don't forget to define a global variable for our reference frame (put it before the App Global):
+Also, we need to define the global variable for our reference frame (put it before the App Global):
 
 ```python
 reference_frame = None
