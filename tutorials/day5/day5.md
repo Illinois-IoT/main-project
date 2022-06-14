@@ -512,6 +512,7 @@ def index():
 
 
 def detect_motion(image):
+    global reference_frame
     min_area = 15
     maybe_motion_text = "Not Detected"
 
