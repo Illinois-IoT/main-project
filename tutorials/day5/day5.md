@@ -549,7 +549,7 @@ def get_camera_frames(camera):
         raw_capture.truncate()
         raw_capture.seek(0)
 
-        detect_motion(image)
+        image = detect_motion(image)
 
         _, image = cv2.imencode(".jpg", image)
         yield (b'--frame\r\n'
