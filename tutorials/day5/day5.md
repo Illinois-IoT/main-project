@@ -243,7 +243,7 @@ Don’t worry if you don’t understand the meaning of a particular property. Yo
 
 Now let’s save it and link it to the HTML file:
 
-```
+```html
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 ```
 
@@ -282,7 +282,7 @@ In the second line,  `recordButton.firstElementChild` finds the `<i>` element in
 
 Next, let’s add an event listener to the button:
 
-```
+```javascript
 recordButton.addEventListener("click", startListening);
 ```
 
