@@ -189,7 +189,7 @@ To do so, let’s add a new `<div>` element to the `<body>`, with a `<button>` a
 
 #### Tweaking the styles
 
-In its current form, our `navbar` doesn’t remotely resemble a navigation bar that we see on other websites. We will use CSS to make it look fancier. Besides, we will make sure the camera feed scale correctly and fit into our screen.
+In its current form, our `navbar` doesn’t remotely resemble a navigation bar that we see on other websites. We will use CSS to make it look fancier. Besides, we will make sure the camera feed scales correctly and fits into our screen.
 
 To do so, let’s create a `style.css` file in the `static` folder and enter the following lines of code:
 
