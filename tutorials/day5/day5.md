@@ -482,6 +482,7 @@ Now the only thing we need to do is to call the `detect_motion` function right a
 For reference, the final `main.py` should look like this:
 
 ```python
+import flask
 from flask import Flask, render_template, Response, request
 from picamera.array import PiRGBArray
 from picamera import PiCamera
