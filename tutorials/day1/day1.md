@@ -6,7 +6,7 @@ A Raspberry Pi is a simple, mini computer. It is a "single-board computer" becau
 
 ![parts of a Raspberry Pi](pi_parts.png "parts of a Raspberry Pi")
 
-Exmaples of input devices are the standard keyboard and mouse, or external sensors like camera or microphone. Output devices are the ones transformming anything coming from the computer into a human-perceptible form. This can include a monitor (which visualizes the state of the computer), or a speaker (which provides auditory feedback).
+Examples of input devices are the standard keyboard and mouse, or external sensors like a camera or microphone. Output devices are the ones transforming anything coming from the computer into a human-perceptible form. This can include a monitor (which visualizes the state of the computer), or a speaker (which provides auditory feedback).
 
 ### GPIO
 
@@ -29,9 +29,9 @@ And if we’re going to be rigging up electrical circuits here with power, then 
 Some of the standard GPIO pins are used for communication purposes. Here are some common communication protocols.
 
 * SPI pins – The Serial Peripheral Interface (SPI) is a communication protocol used to transfer data between micro-computers like the Raspberry Pi and peripheral devices. The MISO pin receives data, and the MOSI pin sends data from the Raspberry Pi. Furthermore, the serial clock pin sends pulses at a regular frequency between the Raspberry Pi and the SPI device at the same speed, in which the devices transfer data to each other.
-* UART pins – UART stands for "universal asynchronous receiver-transmitter", which is a physical circuit designed to send and recieve data.
+* UART pins – UART stands for "universal asynchronous receiver-transmitter", which is a physical circuit designed to send and receive data.
 * PWM pins – PWM stands for “pulse width modulation,” which is a communication protocol best used with stuff that moves and lights up: motors, LEDs, etc.
-* I2C pins – I2C is stands for "inter-integrated circuit" (two “inters” or I"squared"C). It works similarly to SPI, but it doesn’t force you to use nearly so many pins.
+* I2C pins – I2C stands for "inter-integrated circuit" (two “inters” or I "squared" C). It works similarly to SPI, but it doesn’t force you to use nearly so many pins.
 
 ## Introduction to the Project
 
@@ -85,7 +85,7 @@ Note that the format in which the image is saved depends on the `-e` (equivalent
 
 Now, we know that we can use the built-in `libcamera-still` application to take images, let's wrap it up in a Bash script.
 
-A Bash script is a file that contains a series of shell commands. Anything you can run normally on the command line can be put into a Bash script and it do exactly the same thing. Similarly, anything you can put into a Bash script can also be run normally in the command line and do exactly the same thing.
+A Bash script is a file that contains a series of shell commands. Anything you can run normally on the command line can be put into a Bash script and it does exactly the same thing. Similarly, anything you can put into a Bash script can also be run normally in the command line and do exactly the same thing.
 
 Bash script helps us automate tasks by allowing us to run a set of terminal commands all at once.
 
@@ -93,7 +93,7 @@ To start, let's create a `capture.sh` file in your final project folder on the `
 ``` Bash
 #!/bin/bash
 ```
-in order to signify that this is in fact a Bash script. The hash exclamation mark `(#!)` character sequence is referred to as the "Shebang". Following it is the path to the interpreter (or program) that should be used to run (or interpret) the rest of the lines in the text file. For a Bash script, it will be the path to Bash (the common interpreter of shell commands), but there are many other types of scripts and each of them has their own interpreter.
+in order to signify that this is in fact a Bash script. The hash exclamation mark `(#!)` character sequence is referred to as the "Shebang". Following it is the path to the interpreter (or program) that should be used to run (or interpret) the rest of the lines in the text file. For a Bash script, it will be the path to Bash (the common interpreter of shell commands), but there are many other types of scripts and each of them has its own interpreter.
 
 In a Bash script, we can run any terminal commands we want! For example: 
 ``` Bash
@@ -113,7 +113,7 @@ World
 !
 ```
 into the terminal with 1 second between each print out statement.
-(If encounter permission denied, run "ls -la" to check priviledge and use "chmod u+x capture.sh" to give priviledge.)
+(If encounter permission denied, run "ls -la" to check privilege and use "chmod u+x capture.sh" to give privilege.)
 
 For our purpose, we will create a script called `capture.sh` with the following:
 ``` Bash
@@ -144,11 +144,11 @@ instead. Instead of storing the image in the file `test.jpg`, we've replaced it 
 ./capture.sh image1.jpg
 ```
 
-Now, the new image is stored in `image1.jpg`. Run it again but replace `image1.jpg` with anything (ending in `.jpg`). As you can see, our Bash script reads in whatever that is passed to it when you run the script and uses that as the name of the file. Very cool stuff! Now you can run our `./capture.sh` script and store the image to any filename of your choosing.
+Now, the new image is stored in `image1.jpg`. Run it again but replace `image1.jpg` with anything (ending in `.jpg`). As you can see, our Bash script reads in whatever is passed to it when you run the script and uses that as the name of the file. Very cool stuff! Now you can run our `./capture.sh` script and store the image to any filename of your choosing.
 
 ## 3. To Push Some Buttons
 
-Now you may think about using your new Raspberry Pi camera on the go, or showing it off at your friend's party, but you certainly don't want to carry those heavy keyboard and monitor. How will we take pictures then?
+Now you may think about using your new Raspberry Pi camera on the go, or showing it off at your friend's party, but you certainly don't want to carry a heavy keyboard and monitor with you. How will we take pictures then?
 
 This is where we will take what we've learned about GPIO pins and put them to good use.
 
@@ -158,7 +158,7 @@ Let's write a Python script that takes a photo using the camera module whenever 
 
 We will use a breadboard, a push pin (or a switch), a resistor, and two jumper wires.
 
-We connect one side of the switch to an input pin on the Raspberry Pi, in this case we use pin 10. The other side of the switch we connect to 3.3V on pin 1 using a resistor. The resistor is used as a current limiting resistor to protect our input pin by limiting the amount of current that can flow.
+We connect one side of the switch to an input pin on the Raspberry Pi, in this case, we use pin 10. On the other side of the switch we connect to 3.3V on pin 1 using a resistor. The resistor is used as a current limiting resistor to protect our input pin by limiting the amount of current that can flow.
 
 It should look like the following:
 
@@ -210,7 +210,7 @@ If the program does not work, or continuously outputs `Button was pushed!` witho
 
 ### c) Switching to Event-based GPIO Input
 
-We want the program to only print out `Button was pushed!` once everytime the button is pushed. After all, it is quite strange for there to be multiple `Button was pushed!` printed when you have only pressed the button once. This is a result of 'switch bounce'.
+We want the program to only prints out `Button was pushed!` once every time the button is pushed. After all, it is quite strange for there to be multiple `Button was pushed!` printed when you have only pressed the button once. This is a result of 'switch bounce'.
 
 We want to rewrite our program to print a single message whenever the button is pressed rather than continuously outputting a message. We can realize this by using GPIO events.
 
@@ -228,7 +228,7 @@ def button_callback(channel):
     print("Button was pushed!")
 ```
 
-Next, we will initalize the pin
+Next, we will initialize the pin
 ``` Python
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
@@ -263,17 +263,17 @@ Let's try executing this file again by running the following in the terminal:
 ``` Bash
 $ python3 push_button_capture.py
 ```
-You now could see that the program only print out `Button was pushed!` only once everytime the button is pushed.
+You now could see that the program only prints out `Button was pushed!` only once every time the button is pushed.
 
 ### d) What To Do When the Button is Pushed?
 
-There is now visual indication in the terminal whenever the button is pushed. Our next task is to capture an image whenever the event occurs. Can you think of how this can be accomplished?
+There is now a visual indication in the terminal whenever the button is pushed. Our next task is to capture an image whenever the event occurs. Can you think of how this can be accomplished?
 
 We've already had a callback function, `button_callback`, which is called whenever the button is pushed. Hard to believe? Change the print statement inside `button_callback` to anything you want and run the program again. You'll see that whenever the button is pushed, your new print statement is printed in the terminal!
 
 So, we will need to add something inside of this callback function in order to accomplish our mission.
 
-We've already wrote a Bash script that takes a photo. Let's use that! When we wanted to take a photo, we can simply run the Bash script in the terminal. We need a way to run the same script in our Python program.
+We've already written a Bash script that takes a photo. Let's use that! When we wanted to take a photo, we can simply run the Bash script in the terminal. We need a way to run the same script in our Python program.
 
 This is where the Python `os` module comes into place. This module provides a portable way of using operating system dependent functionality. Some popular functions include creating and deleting directories/files, and of course, executing other programs.
 
@@ -282,12 +282,12 @@ To do this, we will first need to import the module in our Python file
 import os
 ```
 
-In order to run a terminal command in Python, we will use the funciton `os.system`, meaning that we can add the following line in `button_callback`:
+In order to run a terminal command in Python, we will use the functions `os.system`, meaning that we can add the following line in `button_callback`:
 ``` Python
 os.system("./capture.sh test_capture.jpg")
 ```
 
-Try running the Python program again. As you can see, whenever you press the button, `test_capture.jpg` is created with the photo. But we still face the same issue as before... If you press the button again, the photo is replaced with a new photo. What if we wanted to save all of the photos everytime we press the button instead of just the most recent?
+Try running the Python program again. As you can see, whenever you press the button, `test_capture.jpg` is created with the photo. But we still face the same issue as before... If you press the button again, the photo is replaced with a new photo. What if we wanted to save all of the photos every time we press the button instead of just the most recent?
 
 ### e) Unique Files for Each Image
 
@@ -346,4 +346,4 @@ Try running this in the terminal:
 $ python3 push_button_capture.py
 ```
 
-We now can see that a new `.jpg` file is created everytime you push the button. And each of the files is an image captured by the camera module.
+We now can see that a new `.jpg` file is created every time you push the button. And each of the files is an image captured by the camera module.

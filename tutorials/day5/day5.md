@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Today, we will continue our journey on implementing a smart doorbell. We're going to make the doorbell listen to the visitors and transcribe what they are saying. In addition, we will integrate our code for motion detection from day3 into our video feed. 
+Today, we will continue our journey of implementing a smart doorbell. We're going to make the doorbell listen to the visitors and transcribe what they are saying. In addition, we will integrate our code for motion detection from day3 into our video feed. 
 
 Before doing so, we need a bit more knowledge about web development.
 
@@ -12,9 +12,9 @@ Before doing so, we need a bit more knowledge about web development.
 
 ![](front-end_VS_back-end.png)
 
-Websites usually consist of two parts: the front-end and the back-end. The front-end is the side which users experience. It is responsible for how a page looks, responds, and appears when a user opens up a website and interact with the elements on the page. HTML, CSS, and JavaScript are the building blocks of front-end development. They can be rendered, presented, and executed on every browser and ensure the browsing experience for 1 billion websites and 5 billion users.
+Websites usually consist of two parts: the front-end and the back-end. The front-end is the side that users experience. It is responsible for how a page looks, responds, and appears when a user opens up a website and interacts with the elements on the page. HTML, CSS, and JavaScript are the building blocks of front-end development. They can be rendered, presented, and executed on every browser and ensure the browsing experience for 1 billion websites and 5 billion users.
 
-On the contrary, the back-end is the guts of the web application, containing inner logic and structures and living on the server. The back-end stores, processes, and serves program and user data to ensure that the front-end has what it needs. For our project, we were mainly working on the back-end, i.e. the logic to capture camera frames and to create video feed. In addition to Python, back-end developers use programming languages like Java, PHP, and Ruby to work with data.
+On the contrary, the back-end is the guts of the web application, containing inner logic and structures and living on the server. The back-end stores, processes, and serves program and user data to ensure that the front-end has what it needs. For our project, we were mainly working on the back-end, i.e. the logic to capture camera frames and create a video feed. In addition to Python, back-end developers use programming languages like Java, PHP, and Ruby to work with data.
 
 However, the front-end of our project is so far very simple - we don't have interactive elements like buttons but only an image that doesn't fit the size of the screen well. So today, we will make our website look nicer while adding interactions and more functionalities to it.
 
@@ -51,7 +51,7 @@ p, li {
 }
 ```
 
-Instead using comma, you may also put a space between two selectors. This is called the **descendant combinator,** which selects an element following a hierarchy. For example, to select an `<em>` that is nested inside an `<li>` element, 
+Instead of using a comma, you may also put a space between two selectors. This is called the **descendant combinator,** which selects an element following a hierarchy. For example, to select an `<em>` that is nested inside an `<li>` element, 
 
 ```css
 li em {
@@ -126,9 +126,9 @@ This `<link>` element tells the browser that we have a stylesheet, using the `re
 
 #### c) A little bit on JavaScript
 
-Now we’ve learned marking up content as HTML documents and using CSS to style them. However, HTML and CSS are both declarative languages specifying how to display content. They are static and cannot react to users’ action. So how can we handle users’ input and dynamically change the page’s content based on available data? The answer is  JavaScript, a programming language that browsers understand and that controls the interactivity on the page. 
+Now we’ve learned marking up content as HTML documents and using CSS to style them. However, HTML and CSS are both declarative languages specifying how to display content. They are static and cannot react to users’ actions. So how can we handle users’ input and dynamically change the page’s content based on available data? The answer is  JavaScript, a programming language that browsers understand and that controls the interactivity on the page. 
 
-JavaScript is versatile yet beginner-friendly. Being a script language, it’s similar to Python to some extent. We will cover only a little bit on the language, just so you can understand the code we will use today. 
+JavaScript is versatile yet beginner-friendly. Being a scripting language, it’s similar to Python to some extent. We will cover only a little bit of the language, just so you can understand the code we will use today. 
 
 In JavaScript, you declare a variable with the `let` keyword, followed by the name you give to the variable:
 
@@ -151,7 +151,7 @@ function multiply(num1,num2) {
 }
 ```
 
-There are four basic data types in JavaScript: string, number, boolean, and array. They are self-explanatory. Other than these, everything in JavaScript is an object, which can be seen as a collection of properties and functions. You can access the properties or functions by the form `objectName.propertyName`or `objectName.functionName`. For example, `document` is a very important object that represents the whole HTML document you’re visiting. It consists of a bunch of properties, such as `document.lastModified` which is the date on which document was last modified. It also has a variety of functions (called methods.) One of the most useful ones is `document.getElementById()` which returns the element of certain id on the page. Through `document` object, JavaScript enables interactivity for the webpage.
+There are four basic data types in JavaScript: string, number, boolean, and array. They are self-explanatory. Other than these, everything in JavaScript is an object, which can be seen as a collection of properties and functions. You can access the properties or functions by the form `objectName.propertyName`or `objectName.functionName`. For example, `document` is a very important object that represents the whole HTML document you’re visiting. It consists of a bunch of properties, such as `document.lastModified` which is the date on which the document was last modified. It also has a variety of functions (called methods.) One of the most useful ones is `document.getElementById()` which returns the element of a certain id on the page. Through `document` object, JavaScript enables interactivity for the webpage.
 
 To use JavaScript, you enter this code on a new line, just before the closing `</body>` tag in the HTML document:
 
@@ -175,7 +175,7 @@ Sounds complicated? It's actually much easier than you thought, so let's get sta
 
 #### Extending the HTML
 
-We will first extend `index.html` in our `camera_streamer` project to support a navigation bar at the bottom where we can add a button and show some subtitle. We want to use the button to trigger audio recording and recognizing and use the subtitle to show transcription result.
+We will first extend `index.html` in our `camera_streamer` project to support a navigation bar at the bottom where we can add a button and show some subtitles. We want to use the button to trigger audio recording and recognizing and use the subtitle to show transcription result.
 
 To do so, let’s add a new `<div>` element to the `<body>`, with a `<button>` and a `<span>` of text in it:
 
@@ -251,7 +251,7 @@ Now let’s save it and link it to the HTML file:
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 ```
 
-We will also link another online CSS stylesheet, `font-awesome`, which provides us some useful icons we can use in our button:
+We will also link another online CSS stylesheet, `font-awesome`, which provides us with some useful icons we can use in our button:
 
 ```html
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -283,7 +283,7 @@ let recordButtonIcon = recordButton.firstElementChild;
 let subtitle = document.getElementById("subtitle");
 ```
 
-In the second line,  `recordButton.firstElementChild` finds the `<i>` element inside the button, which is used to display icon. We select this element because we want to change the button’s icon during recording.
+In the second line,  `recordButton.firstElementChild` finds the `<i>` element inside the button, which is used to display the icon. We select this element because we want to change the button’s icon during recording.
 
 Next, let’s add an event listener to the button:
 
@@ -291,7 +291,7 @@ Next, let’s add an event listener to the button:
 recordButton.addEventListener("click", startListening);
 ```
 
-This means whenever an user clicks the button, the function `startListening` will be called, so we can react to the click using this function. We haven’t defined it yet, and let’s do it now.	
+This means whenever a user clicks the button, the function `startListening` will be called, so we can react to the click using this function. We haven’t defined it yet, and let’s do it now.	
 
 ```javascript
 function startListening() {
@@ -371,15 +371,15 @@ So our final `index.html` will look like
 
 ### Speech recognition in Python
 
-Let’s move onto the back-end part. `SpeechRecognition` is a powerful Python library for performing speech recognition. In just a few lines, we will be able to detect a phrase and transcribe it.
+Let’s move on to the back-end part. `SpeechRecognition` is a powerful Python library for performing speech recognition. In just a few lines, we will be able to detect a phrase and transcribe it.
 
-As always, we fist need to import the library:
+As always, we first need to import the library:
 
 ```Python
 import speech_recognition as sr
 ```
 
-Then we will initialize a `Recognizer` and a `Microphone`. We should use the `Microphone` instance as our audio source and caliberate it before we start listening:
+Then we will initialize a `Recognizer` and a `Microphone`. We should use the `Microphone` instance as our audio source and calibrate it before we start listening:
 
 ```Python
 recognizer = sr.Recognizer()

@@ -24,7 +24,7 @@ What are some examples of requests made from a browser to a web server?
 
 1. when you type in `amazon.com`, a request is made for the contents of the main page. The response are files (HTML/CSS, etc.) that specify to the browser how and what to display.
 
-2. every query (or question) you type into `Google` is a request made to the Google servers. The request includes your query string. Your browser will then receive back a response that consists of a list of relavent links.
+2. every query (or question) you type into `Google` is a request made to the Google servers. The request includes your query string. Your browser will then receive back a response that consists of a list of relevant links.
 
 3. every video you watch on `YouTube` requires HTTP requests. Your browser requests the video from YouTube's servers and once it is received, you can view it on your screen.
 
@@ -34,11 +34,11 @@ What are some examples of requests made from a browser to a web server?
 
 Now that we know how our browser can receive data from any web server, how do we contribute to the web? 
 
-Everyday, over 95 million photos and videos are shared on Instagram. There's also 720,000 hours of video being uplaoded to YouTube on the daily bases. Let's look at the technical mechanics of how these pieces of media is posted onto the internet for everyone to see.
+Every day, over 95 million photos and videos are shared on Instagram. There are also 720,000 hours of video being uploaded to YouTube on the daily basis. Let's look at the technical mechanics of how these pieces of media are posted onto the internet for everyone to see.
 
-Above, we discussed how your browser loads data. They do it by `GET`ting data from a web server. Now, when you want to post a new Instagram post, your browser will need to `POST` to the web server. What about when you want to edit a caption? Well, that's a `PUT` request. And when you decide that your post is no longer relavent, you can `DELETE` from the web server.
+Above, we discussed how your browser loads data. They do it by `GET`ting data from a web server. Now, when you want to post a new Instagram post, your browser will need to `POST` to the web server. What about when you want to edit a caption? Well, that's a `PUT` request. And when you decide that your post is no longer relevant, you can `DELETE` from the web server.
 
-Lets summarize. Here are the most common HTTP requests. There are others like `PATCH` or `OPTIONS`, but we will not cover them here.
+Let's summarize. Here are the most common HTTP requests. There are others like `PATCH` or `OPTIONS`, but we will not cover them here.
 
 #### GET
 
@@ -46,11 +46,11 @@ The HTTP `GET` method is used to **read** (or retrieve) a representation of a re
 
 #### POST
 
-The `POST` verb is most-often utilized to **create** new resources.
+The `POST` verb is most often utilized to **create** new resources.
 
 #### PUT
 
-`PUT` is most-often utilized for **update** capabilities, PUT-ing to a known resource URI with the request body containing the newly-updated representation of the original resource.
+`PUT` is most often utilized for **update** capabilities, PUT-ing to a known resource URI with the request body containing the newly-updated representation of the original resource.
 
 #### DELETE
 
@@ -58,11 +58,11 @@ The `POST` verb is most-often utilized to **create** new resources.
 
 ### d) Putting it All Together
 
-Here is an example of a HTTP request:
+Here is an example of an HTTP request:
 
 ![](day4_http_request_format.png)
 
-It starts with a **method** (a verb we learned about above), followed by the path to the resource to fetch. An example of a path is `google.com` or `instagram.com/illinoiscs`. Then, we will specify the vertion of the HTTP protocol we want to use (don't worry about this for now). And finally, any optional headers we want to send to the server is included.
+It starts with a **method** (a verb we learned about above), followed by the path to the resource to fetch. An example of a path is `google.com` or `instagram.com/illinoiscs`. Then, we will specify the version of the HTTP protocol we want to use (don't worry about this for now). And finally, any optional headers we want to send to the server are included.
 
 Next, here is an example of a response from the server:
 
@@ -78,7 +78,7 @@ Now that we know about how web servers work, let's discuss how we can create one
 
 Flask is a web framework in Python. This means flask provides you with tools, libraries and technologies that allow you to build a web application. This web application can be some web pages, a blog, a wiki or go as big as a web-based calendar application or a commercial website.
 
-We will start by writting a `"Hello World"` application in Flask.
+We will start by writing a `"Hello World"` application in Flask.
 
 To begin, we will need to create a new folder to store our web application.
 
@@ -94,7 +94,7 @@ hello_flask/
 |-- templates
 ```
 
-The `templates/` folder is the place where the templates will be put. The `static/` folder is the place where any files (images, css, javascript) needed by the web application will be put. These two folders define what the frontend of the web app will look like.
+The `templates/` folder is the place where the templates will be put. The `static/` folder is the place where any files (images, css, javascript) needed by the web application will be put. These two folders define what the front end of the web app will look like.
 
 Now, inside of `hello_fask/` we will create the server file. This is the "backend" of our app. Think of the backend as where all of the HTTP requests are processed and what response is sent back.
 
@@ -167,7 +167,7 @@ Every device has its own IP address. You can find the IP address of your Raspber
 
 IP addresses are very useful. If I wanted to access a file on your computer, I would first need to know your IP address (and then get to hacking). If I wanted to send you a file, I would also need to know your IP address so that the file is sent to the right device.
 
-There is a lot to know when it comes to IP address, and since it is simply a protocol (a set of rules), the protocol can change. There are currently two forms of IP address: IPv4 and IPv6. There is no need to know much about them, but the main differences are defined below.
+There is a lot to know when it comes to IP addresses, and since it is simply a protocol (a set of rules), the protocol can change. There are currently two forms of IP address: IPv4 and IPv6. There is no need to know much about them, but the main differences are defined below.
 
 ![](day4_ipv4_ipv6.webp)
 
@@ -175,7 +175,7 @@ When the internet was first created, IPv4 was sufficient in identifying all devi
 
 For now, we will stick with IPv4 address, which is a string of 4 numbers (between 0 and 255) separated by periods. So, the full IP addressing range goes from 0.0.0.0 to 255.255.255.255.
 
-There is one special address you should remember that that is `127.0.0.1`. This is known as your localhost (or home). You might have even seen memes online like this:
+There is one special address you should remember that is `127.0.0.1`. This is known as your localhost (or home). You might have even seen memes online like this:
 
 ![](day4_home_meme.webp)
 
@@ -189,7 +189,7 @@ As you have noticed, you cannot simply go to `http://192.168.0.108` to access th
 
 Not only do you have to know a server's IP address, you also have to know which port the server is run on.
 
-Imaging you want to run two web apps at the same time on the same machine. How do you do that? If you go to `http://192.168.0.108`, which web page should be shown? That is why we need ports. By default flask servers are run on port 5000 (but you can change that if you want). If you tried running a different web app at the same time, you will need to specify a different port number (lets say 5001). Then, to access the first webpage, you can go to `http://192.168.0.108:5000` and to access the second, you can go to `http://192.168.0.108:5001`.
+Imagine you want to run two web apps at the same time on the same machine. How do you do that? If you go to `http://192.168.0.108`, which web page should be shown? That is why we need ports. By default flask servers are run on port 5000 (but you can change that if you want). If you tried running a different web app at the same time, you will need to specify a different port number (lets say 5001). Then, to access the first webpage, you can go to `http://192.168.0.108:5000` and to access the second, you can go to `http://192.168.0.108:5001`.
 
 Phew we're finally done with the introduction. Lets move on to creating a web app for your smart doorbell system!
 
@@ -330,4 +330,4 @@ $ python3 main.py
 
 Now, if you visit `http://127.0.0.1:5000` on your Raspberry Pi, you should see a real-time stream of your camera! 
 
-To access this page from your phone, you will need the IP address of your Raspberyy Pi (revisit how to do so above). Make sure your phone is on the same Wi-Fi network as your Raspberry Pi. Then all you need to do is visit `http://<Raspberry Pi's IP>:5000` on your device!
+To access this page from your phone, you will need the IP address of your Raspbery Pi (revisit how to do so above). Make sure your phone is on the same Wi-Fi network as your Raspberry Pi. Then all you need to do is visit `http://<Raspberry Pi's IP>:5000` on your device!

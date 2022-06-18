@@ -10,11 +10,11 @@ How do we achieve this?
 
 Well, first we need a way to stream the camera feed. In the past, we successfully captured still images from the camera, and even showed a preview of the feed for a few seconds. But now, we need a way to access the camera feed in a Python script.
 
-We would then need to figure out a way to detect any motion in the stream. We'll get back to this later, but for now, think of some ideas about how we can detect motion. Think about what exactly the "motion" is in terms of a stream of images. After all, a video is just a set of still images that you view in a rapid succession.
+We would then need to figure out a way to detect any motion in the stream. We'll get back to this later, but for now, think of some ideas about how we can detect motion. Think about what exactly the "motion" is in terms of a stream of images. After all, a video is just a set of still images that you view in rapid succession.
 
 ## 1. Steady Camera Stream
 
-First things first, let's stream the camera in Python. To do this, we will need the `picamera` module. Run the following in the terminal to download the neccessary packages:
+First things first, let's stream the camera in Python. To do this, we will need the `picamera` module. Run the following in the terminal to download the necessary packages:
 ```bash
 $ python3 -c "import picamera"
 # TODO install these packages on day1
@@ -141,7 +141,7 @@ What exactly is "motion" anyways? In the example above, we see that there are mi
 
 ![](day3_frames_animated.gif)
 
-Today, we will explore what it means to use background subtration between frames to detect motion.
+Today, we will explore what it means to use background subtraction between frames to detect motion.
 
 ### What is Background Subtraction
 
@@ -149,31 +149,31 @@ Background subtraction is critical in many Computer Vision applications. We use 
 
 And we will now use it for motion detection.
 
-The base in this approach is that of detecting moving objects from the difference between the current frame and reference frame, which is often called ‘Background Image’ or ‘Background Model’. This background subtraction is typically done by detecting the foreground objects in a video frame and foreground detection is the main task of this whole approach.  
+The base of this approach is that of detecting moving objects from the difference between the current frame and reference frame, which is often called ‘Background Image’ or ‘Background Model’. This background subtraction is typically done by detecting the foreground objects in a video frame and foreground detection is the main task of this whole approach.  
 
-Any robust background subtraction model should be able to handle light intensity changes and repeated motion from long term scene changes. The analysis of such an approach mathematically can be modelled using a function `P(x,y,t)` as a video sequence where `t` is the time dimensions `x` and `y` are the pixel locations. 
+Any robust background subtraction model should be able to handle light intensity changes and repeated motion from long term scene changes. The analysis of such an approach mathematically can be modeled using a function `P(x,y,t)` as a video sequence where `t` is the time dimensions `x` and `y` are the pixel locations. 
 
 ![](day3_background_subtraction.png)
 
-Mathematically it can be modelled as:
+Mathematically it can be modeled as:
 
 ```
 |reference_frame – current_frame| > Threshold
 ```
 
-This approach can be used when segment motion-based objects such as cars, pedestrians etc. 
+This approach can be used when segmenting motion-based objects such as cars, pedestrians etc. 
 
 And it is very sensitive to threshold values. So depending on object structure, speed, frame rate and global threshold limit, this approach has limited use cases.
 
 ![](day3_threshold.png)
 
-We will use background subtraction to detect motion because the background of our video stream is largely static and unchanging over consecutive frames of a video. Therefore, if we can model the background, we monitor it for substantial changes. If there is a substantial change, we can detect it — this change normally corresponds to motion on our video.
+We will use background subtraction to detect motion because the background of our video stream is largely static and unchanging over consecutive frames of a video. Therefore, if we can model the background, we monitor it for substantial changes. If there is a substantial change, we can detect it — this change normally corresponds to motion in our video.
 
 ### Implement Background Subtraction
 
 Let's go back to our previous `motion_detection.py` file.
 
-Instead of showing the frame or image by 'cv2.imshow("Frame", image)', we should check if image is None; as well as settting a default message of "Not Detected" to variable maybe_motion_text and later change it once we detect any motion. 
+Instead of showing the frame or image by 'cv2.imshow("Frame", image)', we should check if `image` is `None`; as well as setting a default message of "Not Detected" to variable maybe_motion_text and later change it once we detect any motion. 
 
 ``` Python
 maybe_motion_text = "Not Detected"
@@ -181,7 +181,7 @@ if image is None:
     break
 ```
 
-Then, We will need to augment the incoming images. Let's convert the image to grayscale as color has no bearing on motion detection other than adding noise to the data. We also apply Gaussian blurring to smooth our images.
+Then, We will need to augment the incoming images. Let's convert the image to grayscale, as color has no bearing on motion detection other than adding noise to the data. We also apply Gaussian blurring to smooth our images.
 
 ``` Python
 current_frame = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
@@ -223,7 +223,7 @@ Now, we can use `cv2.threshold` to reveal regions of the image that only have si
 It will look something like this:
 ![](day3_frame_delta_thresholded.jpg)
 
-Given this thresholded image, it’s simple to apply contour detection to to find the outlines of these white regions. Don't forget to import imutils!
+Given this thresholded image, it’s simple to apply contour detection to find the outlines of these white regions. Don't forget to import imutils!
 
 ``` Python
 cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -248,7 +248,7 @@ To review, here is what we accomplished:
 2. process each frame in a constant camera feed against the reference frame
 3. each frame is converted to grayscale and a Gaussian blur was applied (can you remember why the Gaussian filter was needed?)
 4. take the difference in pixel density between the reference frame and each subsequence frame
-5. find the "contours", where there is a obvious difference in pixel density (above a given threshold)
+5. find the "contours", where there is an obvious difference in pixel density (above a given threshold)
 6. for each contour, if it is larger than a pre-determined min_area threshold, draw a bounding box to label it as detected motion
 
 
@@ -262,7 +262,7 @@ cv2.putText(image, "Motion: {}".format(maybe_motion_text), (10,20), cv2.FONT_HER
 cv2.putText(image, datetime.datetime.now().strftime("%A %d %B %Y %I: %M: %S%p"), (10,image.shape[0]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.35,(0,0,255),1)
 ```
 
-Here, we use a `maybe_motion_text` variable to store whether there was motion. Think about where you need to initalize this variable and when to change it in your code. If you need help, look to the full code script below.
+Here, we use a `maybe_motion_text` variable to store whether there was motion. Think about where you need to initialize this variable and when to change it in your code. If you need help, look to the full code script below.
 
 Now, let's open up three windows.
 
