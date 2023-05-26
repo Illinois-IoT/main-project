@@ -566,8 +566,8 @@ def video_feed():
 
 @app.route('/listen')
 def transcribe_audio():
-    with mic as source:
-        audio = recognizer.listen(source)
+    with mic as s:
+        audio = recognizer.listen(s)
     try:
         return recognizer.recognize_google(audio)
     except sr.UnknownValueError:
