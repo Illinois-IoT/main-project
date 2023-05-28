@@ -43,47 +43,46 @@ We will achieve this through several parts. Today, you will begin by learning ab
 
 ## 1. Take a picture
 
-To take a picture, we will use the built-in library `libcamera`. It is a software library aimed at supporting complex camera systems directly from the Linux operating system.
+To take a picture, we will use the built-in library `raspistill`. It is a software library aimed at supporting complex camera systems directly from the Linux operating system.
 
 Let's check to make sure that everything works. Run
 ``` Bash
-$ libcamera-hello
+$ raspistill -t
 ```
 in the terminal. You should see a camera preview window for about 5 seconds.
 
 To set how many seconds the preview window will be shown, add a tag `-t <duration>` to specify the number of milliseconds. We can also show the preview indefinitely by running
 
 ``` Bash
-$ libcamera-hello -t 0
+$ raspistill -t 0
 ```
 To exit the preview, click the window's close button, or use `Ctrl-C` in the terminal.
 
-Now, let's capture a photo. To accomplish this, we will use the built-in `libcamera-still` application.
+Now, let's capture a photo. To accomplish this, we will use another input argument of the built-in `raspistill` application.
 
 To capture a full resolution JPEG images, run
 ``` Bash
-$ libcamera-still -o test.jpg
+$ raspistill -o test.jpg
 ```
 
 This will display a preview for about 5 seconds, and then capture a full resolution JPEG image to the file `test.jpg`.
 
 The `-t <duration>` option can be used to alter the length of time the preview shows, and the `--width` and `--height` options will change the resolution of the captured still image. For example
 ``` Bash
-$ libcamera-still -o test.jpg -t 2000 --width 640 --height 480
+$ raspistill -o test.jpg -t 2000 --width 640 --height 480
 ```
 
-`libcamera-still` allows files to be saved in a number of different formats:
+`raspistill` allows files to be saved in a number of different formats:
 ``` Bash
-$ libcamera-still -e png -o test.png
-$ libcamera-still -e bmp -o test.bmp
-$ libcamera-still -e rgb -o test.data
-$ libcamera-still -e yuv420 -o test.data
+$ raspistill -e png -o test.png
+$ raspistill -e bmp -o test.bmp
+$ raspistill -e gif -o test.gif
 ```
 Note that the format in which the image is saved depends on the `-e` (equivalently `--encoding`) option and is not selected automatically based on the output file name.
 
 ## 2. Automate Picture Taking
 
-Now, we know that we can use the built-in `libcamera-still` application to take images, let's wrap it up in a Bash script.
+Now, we know that we can use the built-in `raspistill` application to take images, let's wrap it up in a Bash script.
 
 A Bash script is a file that contains a series of shell commands. Anything you can run normally on the command line can be put into a Bash script and it does exactly the same thing. Similarly, anything you can put into a Bash script can also be run normally in the command line and do exactly the same thing.
 
@@ -119,23 +118,23 @@ For our purpose, we will create a script called `capture.sh` with the following:
 ``` Bash
 #!/bin/bash
 
-libcamera-still -o test.jpg
+raspistill -o test.jpg
 ```
 
 Can you guess what this script will do?
 
-You'd be correct if you said that it would do the exact same thing as running the `libcamera-still -o test.jpg` command directly in the terminal!
+You'd be correct if you said that it would do the exact same thing as running the `raspistill -o test.jpg` command directly in the terminal!
 
 Now, to execute this script, we can go back to the terminal and run
 ``` Bash
 ./capture.sh
 ```
 
-You'll notice that a new `test.jpg` file was created in your final project folder. It's the image just captured! Try running the command again. You'll see that `test.jpg` is replaced with a new image. Let's fix this.
+You'll notice that a new `test.jpg` file was created in your main project folder. It's the image just captured! Try running the command again. You'll see that `test.jpg` is replaced with a new image. Let's fix this.
 
 Inside `capture.sh`, replacing the existing line with
 ``` bash
-libcamera-still -o $1.jpg
+raspistill -o $1.jpg
 ```
 instead. Instead of storing the image in the file `test.jpg`, we've replaced it with `$1.jpg`. What does this mean?
 
