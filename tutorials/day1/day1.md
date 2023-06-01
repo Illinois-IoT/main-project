@@ -330,7 +330,7 @@ def button_callback(channel):
     print("Button was pushed!")
     current_time = datetime.datetime.now()
     time_formatted = current_time.strftime("%m_%d_%Y--%H_%M_%S")
-    os.system("./capture2.sh " + time_formatted + ".jpg")
+    os.system("./capture.sh " + time_formatted + ".jpg")
 
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
